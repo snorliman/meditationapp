@@ -1,10 +1,30 @@
 import React from 'react';
+import { Route, Switch } from "react-router-dom";
+import HomePage from "./layouts/HomePage";
+import Login from "./layouts/Login";
+import Register from "./layouts/Register";
+import MeditationApp from "./layouts/MeditationApp";
+
 
 import './App.scss';
 
 function App() {
   return (
-    <h1>Hello World<h1>
+    <Switch>
+      <Route path="/">
+        <HomePage/>
+      </Route>
+      <Route path="/zaloguj">
+        <Login/>
+      </Route>
+      <Route path="/rejestracja">
+        <Register/>
+      </Route>
+      <Route path="/aplikacja">
+        <MeditationApp/>
+      </Route>
+    </Switch>
+    
   );
 }
 
