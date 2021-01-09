@@ -4,35 +4,42 @@ import styled from "styled-components";
 const Ul = styled.ul`
     display: flex;
    justify-content: space-around; 
+   height: 100%;
+   widht:100%;
+   
+   align-items: center;
    flex-flow: row nowrap;
+   text-align: center;
    list-style: none;
    
    li{
-       padding: 0 15px;
+       padding: 10px 10px;
+       font-weight: 600;
    }
    
     @media(max-width: 768px){
     
         flex-flow: column nowrap;
-        background-color: orange;
+        background-color: #F9710D;
         position: fixed;
-        top: 55px;
+        align-items: center;
+        top: 100px;
         right: 0;
         height: 80vh;
         width: 200px;
         transform: ${({open}) => open ? "translateX(0)" : "translateX(100%)"};
-        transition: transform 0.5s ease-and-out;
+        transition: all 0.5s ease-out;
     }`
 
 const RightNav = ({open}) => {
     return (
         <Ul open={open}>
-            <li>Dlaczego medytować</li>
-            <li>Jak zacząć praktykę</li>
-            <li>Jak używać aplikacji</li>
-            <li>Kontak</li>
-            <li>Zarejestruj się</li>
-            <li>Zaloguj się</li>
+            <li>DLACZEGO MEDYTOWAĆ</li>
+            <li>JAK ZACZĄĆ PRAKTYKĘ</li>
+            <li>JAK UŻYWAĆ APLIKACJI</li>
+            <li>KONTAKT</li>
+            <li>ZAREJESTRUJ SIĘ</li>
+            <li>ZALOGUJ SIĘ</li>
         </Ul>
     )
 }

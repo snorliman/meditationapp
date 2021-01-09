@@ -3,8 +3,17 @@ import styled from "styled-components";
 import Burger from "./Burger";
 
 const Nav = styled.nav`
-heigth: 40px;
-width: 100%
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: space-around;
+width: 100%;
+color: white;
+font-family: Raleway;
+@media(max-width:768px){
+    display: flex;
+    justify-content: flex-end;
+}
 `
 const Navbar = () => {
     return (

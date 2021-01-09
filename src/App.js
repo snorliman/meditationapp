@@ -5,12 +5,9 @@ import Login from "./layouts/Login";
 import Register from "./layouts/Register";
 import MeditationApp from "./layouts/MeditationApp";
 
-
-import './App.scss';
-
 function App() {
   return (
-    <Switch>
+    <Switch>  
       <Route path="/">
         <HomePage/>
       </Route>

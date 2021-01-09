@@ -4,16 +4,19 @@ import RightNav from './RightNav';
 
 const StyldedBurger = styled.div`
 display: none;
-
+z-index: 10;
+width: 100px;
+height: 40px;
+top: 107px;
+right: 0;
+position: absolute;
 
 @media(max-width: 768px) {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
-    positon: fixed;
-    z-index: 10;
-    width: 50px;
-    height: 40px;
+    
+    
 
 }
 
@@ -44,12 +47,13 @@ const Burger = () => {
     const [open, setOpen] = useState(false)
     return (
         <>
+        <RightNav open={open}/>
         <StyldedBurger open={open} onClick={() => setOpen(!open)}>
             <div></div>
             <div></div>
             <div></div>
         </StyldedBurger>
-        <RightNav open={open}/>
+        
         </>
     )
 }
