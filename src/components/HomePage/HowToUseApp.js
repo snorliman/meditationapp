@@ -4,7 +4,7 @@ import ornament from "../../assets/ornament/floral-design-with-curled-edges.svg"
 
 export default function HowToUseApp() {
     return (
-        <section id="how-to-use-app">
+        <section className="how-to-use-app" id="how-to-use-app">
             <div className="section-container" data-aos="fade-up">
                 <h2>Czym jest MeditationApp i jak używać?</h2>
                 <p>Meditation App to pomoc z pozostaniem w praktyce medytacji. 

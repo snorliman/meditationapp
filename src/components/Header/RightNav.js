@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 
 const Ul = styled.ul`
     display: flex;
@@ -12,12 +13,22 @@ const Ul = styled.ul`
    flex-flow: row nowrap;
    text-align: center;
    list-style: none;
+
+   #nav-item {
+       &:hover {
+           cursor: poiner;
+           color: black;
+       }
+   }
    
    li {
         padding: 10px 10px;
         font-weight: 600;
-        &:hover {
-        color: "black";
+        color: white;
+        &:hover{
+            color: black;
+        }
+    
     } 
    }
     @media(max-width: 768px){
@@ -34,24 +45,25 @@ const Ul = styled.ul`
         transition: all 0.5s ease-out;
     }`
 
-    const hashlinkStyle = {
-        "textDecoration" : "none",
-        "color": "white",
 
-    }
+const linkstyle = {
+    textDecoration: "inherit",
+    color: "inherit"
+}
 
 
 
 const RightNav = ({open}) => {
     return (
         <Ul open={open}>
-            <li><HashLink style={hashlinkStyle} to="/#why-meditation">DLACZEGO MEDYTOWAĆ</HashLink></li>
-            <li><HashLink style={hashlinkStyle} to="/#how-to-start">JAK ZACZĄĆ PRAKTYKĘ</HashLink></li>
-            <li><HashLink style={hashlinkStyle} to="/#how-to-use-app">JAK UŻYWAĆ APLIKACJI</HashLink></li>
-            <li><HashLink style={hashlinkStyle} to="/#contact">KONTAKT</HashLink></li>
-            <li>ZAREJESTRUJ SIĘ</li>
-            <li>ZALOGUJ SIĘ</li>
+            <HashLink style={linkstyle} id="nav-item"  to="/#why-meditation"><li>DLACZEGO MEDYTOWAĆ</li></HashLink>
+            <HashLink style={linkstyle} id="nav-item" to="/#how-to-start"><li>JAK ZACZĄĆ PRAKTYKĘ</li></HashLink>
+            <HashLink style={linkstyle} id="nav-item"to="/#how-to-use-app"> <li>JAK UŻYWAĆ APLIKACJI</li></HashLink>
+            <HashLink style={linkstyle} id="nav-item"to="/#contact"><li>KONTAKT</li></HashLink>
+            <Link style={linkstyle} id="nav-item" to="/rejestracja"> <li>ZAREJESTRUJ SIĘ</li></Link>
+            <Link style={linkstyle} id="nav-item" to="zaloguj"><li>ZALOGUJ SIĘ</li></Link>
         </Ul>
     )
 }
 export default RightNav;
+

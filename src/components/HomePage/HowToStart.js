@@ -7,7 +7,7 @@ export default function HowToStart() {
     return (
     
     
-    <section id="how-to-start">
+    <section className="how-to-start" id="how-to-start">
     <div className="section-container" data-aos="fade-up">
         <h2>Jak zacząć praktykę?</h2>
     <p>Medytacja ma wiele wariantów i warto poczytać o niej żeby wybrać praktykę, 

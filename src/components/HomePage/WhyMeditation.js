@@ -25,7 +25,7 @@ export default function WhyMeditation() {
                    jest dla ciebie! Pierwszym wyzwaniem jest rozpoczęcie praktyki, która 
                 początkującym sprawia problemy, co sprawia że łatwo zrezygnować z praktyki już na samym początku. 
                 Do pomocy posłuży wam nasza aplikacja:)</p>
-                <img src={ornament} alt="ornament"/>
+                <img id="how-to-start" src={ornament} alt="ornament"/>
             </div>
             
         </section>
