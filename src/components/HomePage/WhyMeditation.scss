@@ -1,1 +1,57 @@
 @import "../../styles/main";
+
+#why-meditation {
+  width: 100%;
+  margin-top: 160px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $Color3;
+  color: $Color1;
+  font-family: $Font2;
+  font-weight: 400;
+  font-size: 17px;
+  @media (max-width: 1060px) {
+    height: 130vh;
+  }
+  @media (max-width: 690px) {
+    height: 170vh;
+  }
+  @media (max-width: 510px) {
+    height: 190vh;
+  }
+  @media (max-width: 491px) {
+    height: 210vh;
+  }
+
+  .section-container {
+    margin: 10px 10px;
+    max-width: 1200px;
+    width: 90%;
+    height: 90%;
+    border-radius: 20px;
+    background: linear-gradient(
+      45deg,
+      #4b4646 30%,
+      #777373 40%,
+      #616060 60%,
+      #8d8888 90%
+    );
+    box-shadow: 1px 5px 10px 7px $Color2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    h2 {
+      padding: 20px;
+      font-size: 30px;
+      margin-top: 50px;
+      font-family: $Font1;
+    }
+    p {
+      padding: 10px;
+      line-height: 1.6rem;
+    }
+  }
+}

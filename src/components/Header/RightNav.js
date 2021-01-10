@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { HashLink } from 'react-router-hash-link';
 
 const Ul = styled.ul`
     display: flex;
@@ -12,11 +13,13 @@ const Ul = styled.ul`
    text-align: center;
    list-style: none;
    
-   li{
-       padding: 10px 10px;
-       font-weight: 600;
+   li {
+        padding: 10px 10px;
+        font-weight: 600;
+        &:hover {
+        color: "black";
+    } 
    }
-   
     @media(max-width: 768px){
     
         flex-flow: column nowrap;
@@ -31,13 +34,21 @@ const Ul = styled.ul`
         transition: all 0.5s ease-out;
     }`
 
+    const hashlinkStyle = {
+        "textDecoration" : "none",
+        "color": "white",
+
+    }
+
+
+
 const RightNav = ({open}) => {
     return (
         <Ul open={open}>
-            <li>DLACZEGO MEDYTOWAĆ</li>
-            <li>JAK ZACZĄĆ PRAKTYKĘ</li>
-            <li>JAK UŻYWAĆ APLIKACJI</li>
-            <li>KONTAKT</li>
+            <li><HashLink style={hashlinkStyle} to="/#why-meditation">DLACZEGO MEDYTOWAĆ</HashLink></li>
+            <li><HashLink style={hashlinkStyle} to="/#how-to-start">JAK ZACZĄĆ PRAKTYKĘ</HashLink></li>
+            <li><HashLink style={hashlinkStyle} to="/#how-to-use-app">JAK UŻYWAĆ APLIKACJI</HashLink></li>
+            <li><HashLink style={hashlinkStyle} to="/#contact">KONTAKT</HashLink></li>
             <li>ZAREJESTRUJ SIĘ</li>
             <li>ZALOGUJ SIĘ</li>
         </Ul>
