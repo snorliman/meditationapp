@@ -5,6 +5,7 @@ import Login from "./layouts/Login";
 import Register from "./layouts/Register";
 import MeditationApp from "./layouts/MeditationApp";
 
+
 function App() {
   return (
     <Switch>  

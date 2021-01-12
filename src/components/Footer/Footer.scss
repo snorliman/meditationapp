@@ -1,20 +1,43 @@
 @import "../../styles/main";
 
-footer {
+.footer-container {
+  background-color: black;
+  height: 100px;
+}
+.footer {
   width: 100%;
-  height: 40px;
-  border: 2px solid white;
+  height: 100px;
+  border: 1px solid white;
   background-color: $Color3;
-  flex-flow: column nowrap;
+  box-shadow: 1px 1px 20px 2px $Color1;
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  .footer-logo {
+    height: 80px;
+    width: 170px;
+    object-fit: cover;
+    @media (max-width: 360px) {
+      width: 100px;
+    }
+  }
   small {
     color: $Color2;
+    font-size: 10px;
     font-family: $Font1;
+    font-weight: 600;
+    @media (max-width: 360px) {
+      font-size: 7px;
+    }
   }
   .social-container {
     display: flex;
-    justify-content: space-around;
+    width: 120px;
+    height: 70px;
+    justify-content: space-between;
     align-items: center;
+    @media (max-width: 360px) {
+      width: 90px;
+    }
   }
 }
