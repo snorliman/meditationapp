@@ -5,8 +5,9 @@ import ornament from "../../assets/ornament/floral-design-with-curled-edges.svg"
 export default function HowToUseApp() {
     return (
         <section className="how-to-use-app" id="how-to-use-app">
+            <h2>Czym jest MeditationApp i jak używać?</h2>
             <div className="section-container" data-aos="fade-up">
-                <h2>Czym jest MeditationApp i jak używać?</h2>
+                
                 <p>Meditation App to pomoc z pozostaniem w praktyce medytacji. 
                     Jeśli dopiero zaczynasz, masz przepełniony grafik, ciężko jest znaleźć czas, 
                     ta aplikacja pozwoli śledzić ci twoje wyniki. Możesz w niej zaplanować czas 

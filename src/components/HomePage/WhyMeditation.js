@@ -5,8 +5,9 @@ import ornament from "../../assets/ornament/floral-design-with-curled-edges.svg"
 export default function WhyMeditation() {
     return (
         <section id="why-meditation">
+            <h2>Dlaczego warto Medytować?</h2>
             <div className="section-container" data-aos="fade-up">
-                <h2>Dlaczego warto Medytować?</h2>
+                
             <p>Medytacja pomaga się skupić, zwiększa odporność na stres, pomaga w rozpędzonym świecie. 
                 Ludzie medytujący mają więcej energii oraz lepiej funkcjonują. Medytacje poleca się wszystkim 
                 i każdy może to robić. Nie potrzeba drogiego sprzętu, wystarczy przez chiwlę nic nie robić i 

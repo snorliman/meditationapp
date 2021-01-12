@@ -5,8 +5,9 @@ import ornament from "../../assets/ornament/floral-design-with-curled-edges.svg"
 export default function HowToUseApp() {
     return (
         <section className="contact" id="contact">
+            <h2>Skontaktuj się z nami!</h2>
             <div className="section-container" data-aos="fade-up">
-                <h2>Skontaktuj się z nami!</h2>
+                
 
                 <form>
                     <div className="input-container">

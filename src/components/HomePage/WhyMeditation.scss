@@ -6,6 +6,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   background-color: $Color3;
   color: $Color1;
@@ -30,6 +31,12 @@
   @media (max-width: 330px) {
     height: 310vh;
   }
+  h2 {
+    padding: 20px;
+    font-size: 30px;
+    margin-top: 50px;
+    font-family: $Font1;
+  }
 
   .section-container {
     margin: 10px 10px;
@@ -49,12 +56,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    h2 {
-      padding: 20px;
-      font-size: 30px;
-      margin-top: 50px;
-      font-family: $Font1;
-    }
+
     p {
       padding: 10px;
       line-height: 1.6rem;

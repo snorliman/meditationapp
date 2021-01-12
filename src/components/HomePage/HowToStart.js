@@ -8,8 +8,9 @@ export default function HowToStart() {
     
     
     <section className="how-to-start" id="how-to-start">
-    <div className="section-container" data-aos="fade-up">
         <h2>Jak zacząć praktykę?</h2>
+    <div className="section-container" data-aos="fade-up">
+        
     <p>Medytacja ma wiele wariantów i warto poczytać o niej żeby wybrać praktykę, 
         która nam najbardziej pasuje. Najbardziej polecamy medytację siedzącą, wystarczy krzesło,
          nie musi mieć oparcia. Bardzo polecane są poduszki medytacyjne na kŧórych się siada.
