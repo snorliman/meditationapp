@@ -25,13 +25,16 @@
     height: 210vh;
   }
   @media (max-width: 420px) {
-    height: 260vh;
+    height: 290vh;
   }
-  @media (max-width: 350px) {
+  @media (max-width: 380px) {
     height: 350vh;
   }
+  @media (max-width: 350px) {
+    height: 370vh;
+  }
   @media (max-width: 330px) {
-    height: 400vh;
+    height: 420vh;
   }
   h2 {
     padding: 20px;
@@ -56,7 +59,7 @@
     box-shadow: 3px 5px 15px 4px $Color2;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
 
     p {
