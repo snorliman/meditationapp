@@ -37,7 +37,7 @@ const Ul = styled.ul`
         background-color: #F9710D;
         position: fixed;
         align-items: center;
-        top: 100px;
+        top: 130px;
         right: 0;
         height: 80vh;
         width: 200px;
