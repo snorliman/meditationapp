@@ -13,7 +13,7 @@ function App() {
     <>
     <Header/>
     <Switch>  
-      <Route path="/">
+      <Route exact path="/">
         <HomePage/>
       </Route>
       <Route path="/zaloguj">

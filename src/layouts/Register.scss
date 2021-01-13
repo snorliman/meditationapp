@@ -1,0 +1,33 @@
+@import "../styles/main.scss";
+
+.register {
+  height: 70vh;
+  width: 100%;
+  background-color: $Color3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .register-form {
+    height: 80%;
+    width: 80%;
+    background-color: rgb(19, 18, 18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .register-container {
+      height: 90%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      .register-label {
+        text-align: left;
+        padding: 30px;
+        .register-input {
+          background-color: $Color3;
+        }
+      }
+    }
+  }
+}
