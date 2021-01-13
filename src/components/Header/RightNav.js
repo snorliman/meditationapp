@@ -53,15 +53,15 @@ const linkstyle = {
 
 
 
-const RightNav = ({open}) => {
+const RightNav = ({open, onclick}) => {
     return (
         <Ul open={open}>
-            <HashLink style={linkstyle} id="nav-item"  to="/#why-meditation"><li>DLACZEGO MEDYTOWAĆ</li></HashLink>
-            <HashLink style={linkstyle} id="nav-item" to="/#how-to-start"><li>JAK ZACZĄĆ PRAKTYKĘ</li></HashLink>
-            <HashLink style={linkstyle} id="nav-item"to="/#how-to-use-app"> <li>JAK UŻYWAĆ APLIKACJI</li></HashLink>
-            <HashLink style={linkstyle} id="nav-item"to="/#contact"><li>KONTAKT</li></HashLink>
-            <Link style={linkstyle} id="nav-item" to="/rejestracja"> <li>ZAREJESTRUJ SIĘ</li></Link>
-            <Link style={linkstyle} id="nav-item" to="zaloguj"><li>ZALOGUJ SIĘ</li></Link>
+            <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"  to="/#why-meditation"><li>DLACZEGO MEDYTOWAĆ</li></HashLink>
+            <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/#how-to-start"><li>JAK ZACZĄĆ PRAKTYKĘ</li></HashLink>
+            <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#how-to-use-app"> <li>JAK UŻYWAĆ APLIKACJI</li></HashLink>
+            <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#contact"><li>KONTAKT</li></HashLink>
+            <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/rejestracja"> <li>ZAREJESTRUJ SIĘ</li></Link>
+            <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="zaloguj"><li>ZALOGUJ SIĘ</li></Link>
         </Ul>
     )
 }

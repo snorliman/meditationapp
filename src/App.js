@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import HomePage from "./layouts/HomePage";
 import Login from "./layouts/Login";
 import Register from "./layouts/Register";
@@ -8,6 +10,8 @@ import MeditationApp from "./layouts/MeditationApp";
 
 function App() {
   return (
+    <>
+    <Header/>
     <Switch>  
       <Route path="/">
         <HomePage/>
@@ -22,6 +26,8 @@ function App() {
         <MeditationApp/>
       </Route>
     </Switch>
+    <Footer/>
+    </>
     
   );
 }

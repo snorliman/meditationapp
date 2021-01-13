@@ -47,7 +47,7 @@ const Burger = () => {
     const [open, setOpen] = useState(false)
     return (
         <>
-        <RightNav open={open}/>
+        <RightNav open={open} onclick={setOpen}/>
         <StyldedBurger open={open} onClick={() => setOpen(!open)}>
             <div></div>
             <div></div>
