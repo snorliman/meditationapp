@@ -5,21 +5,22 @@ export default function Register() {
     return (
         <section className="register">
            <form className="register-form">
+           <h2 className="register-header">Zarejestruj sie żeby korzystać z naszej aplikacji</h2>
             <div className="register-container">
-                <label className="register-label">Podaj swoję imię
-                    <input type="name"></input>
+                <label className="register-label">PODAJ SWOJE IMIĘ
+                    <input className="register-input" type="name"></input>
                 </label >
-                <label className="register-label" >Podal adres email
+                <label className="register-label" >PODAJ SWÓJ ADRES EMAIL 
                     <input className="register-input" type="email"></input>
                 </label>
-                <label className="register-label">Wpisz swoje hasło
+                <label className="register-label">WPISZ SWOJE HASŁO
                     <input className="register-input"type="password"></input>
                 </label>
-                <label className="register-label">Powtórz swoje hasło
+                <label className="register-label">POWTÓRZ SWOJE HASŁO
                     <input className="register-input" type="password"></input>
                 </label>
 
-                <button className="btn" type="submit">Swtórz konto</button>
+                <button className="btn submit-btn" type="submit">STWÓRZ KONTO</button>
             </div>
         </form> 
         </section>

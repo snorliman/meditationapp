@@ -1,6 +1,6 @@
 @import "../styles/main.scss";
 
-.register {
+.login {
   height: 80vh;
   font-family: $Font1;
   font-weight: 600;
@@ -11,31 +11,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .register-form {
+  &-form {
     height: 80%;
     width: 80%;
     background-color: rgb(19, 18, 18);
     display: flex;
     justify-content: center;
     align-items: center;
-    .register-header {
+    .login-header {
       padding: 20px;
+      margin-bottom: 40px;
       font-size: 30px;
       font-weight: 400;
     }
-    .register-container {
+    .login-container {
       height: 90%;
-      width: 100%;
+      width: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      .register-label {
+      justify-content: flex-start;
+      .login-label {
         text-align: left;
         color: $Color1;
         font-size: 14px;
         padding: 15px;
-        .register-input {
+        .login-input {
           background-color: $Color3;
           display: block;
           border-radius: 5px;
