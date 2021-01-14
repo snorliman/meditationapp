@@ -1,7 +1,10 @@
 import React from "react";
+import "./History.scss";
 
 export default function History() {
     return (
-        <h1>History</h1>
+        <section className="history-container">
+
+        </section>
     )
 }

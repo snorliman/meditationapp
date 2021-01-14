@@ -1,0 +1,14 @@
+@import "../../styles/main.scss";
+
+.panel {
+  width: 100%;
+
+  background-color: $Color1;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 323px) {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,23 @@
+@import "../../styles/main.scss";
+
+.button {
+  padding: 5px 15px;
+  min-width: 30px;
+  font-size: 10px;
+  align-self: center;
+  font-family: $Font1;
+  font-weight: 600;
+  margin: 5px;
+  background-color: $Color3;
+  color: $Color1;
+  border-radius: 10px;
+  border: 1px solid $Color1;
+  box-shadow: 4px 1px 10px 1px $Color2;
+  outline: none;
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: 4px 1px 10px 1px $Color1;
+    color: $Color2;
+  }
+}

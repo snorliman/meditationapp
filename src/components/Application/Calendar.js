@@ -1,7 +1,10 @@
 import React from "react";
+import "./Calendar.scss";
 
 export default function Calendar() {
     return (
-        <h1>Calendar</h1>
+        <section className="calendar-container">
+
+        </section>
     )
 }

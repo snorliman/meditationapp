@@ -1,0 +1,10 @@
+@import "../../styles/main.scss";
+
+.calendar-container {
+  height: 65vh;
+  width: 90%;
+  margin: 0 auto;
+  background-color: $Color1;
+  border-radius: 10px;
+  box-shadow: 1px 2px 7px 1px $Color1;
+}
