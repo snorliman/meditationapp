@@ -1,7 +1,7 @@
 import React from 'react';
 import "./MeditationApp.scss";
 import Panel from "../components/Application/Panel";
-import Timer from "../components/Application/Timer";
+import Timer from "../components/Application/Timer/Timer";
 import Calendar from "../components/Application/Calendar";
 import History from "../components/Application/History";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
