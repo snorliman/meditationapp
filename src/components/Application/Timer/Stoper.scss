@@ -3,7 +3,7 @@
 
   .stoper-container {
     align-items: center;
-    width: 100%;
+    width: 80%;
     background: radial-gradient(ellipse at center, rgba(255,179,206,0) 0%, rgba(255,180,199,0) 43%, rgba(218, 152, 66, 0.43) 100%);
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -19,7 +19,7 @@
   }
   #pomodoro {
     margin-bottom: 43px;
-    max-width: 512px;
+    max-width: 335px;
     width: 100%;
     #clock {
       background: url(http://joeweaver.me/codepenassets/freecodecamp/challenges/build-a-pomodoro-clock/bg.png) no-repeat center center;
@@ -114,7 +114,6 @@
             }
           }
           #reset {
-            position: absolute;
             margin-top: 17.56px;
             transition: margin-top .43s, opacity .43s;
             .fa-stop-circle {

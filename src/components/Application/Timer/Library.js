@@ -1,8 +1,11 @@
 import React from "react";
+import "./Library.scss";
 
 const Library = () => {
     return (
-        <h1>Library</h1>
+        <div className="library">
+
+        </div>
     )
 };
 export default Library;

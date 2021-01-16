@@ -1,8 +1,13 @@
 import React from "react";
+import "./Sheldue.scss";
 
 const Sheldue = () => {
     return (
-        <h1>Sheldue</h1>
+        <div className="sheldue">
+            <ul className="session-planed">
+                {}
+            </ul>
+        </div>
     )
 }
 
