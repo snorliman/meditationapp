@@ -3,12 +3,10 @@
 
   .stoper-container {
     align-items: center;
-    width: 80%;
-    background: radial-gradient(ellipse at center, rgba(255,179,206,0) 0%, rgba(255,180,199,0) 43%, rgba(218, 152, 66, 0.43) 100%);
+    width: 100%;
     background-attachment: fixed;
     background-repeat: no-repeat;
     display: flex;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$Color2, endColorstr='#e0c25e', GradientType=1);
     flex-direction: column;
     font-family: $Font1, sans-serif;
     height: 60vh;
@@ -27,15 +25,15 @@
       display: flex;
       justify-content: center;
       margin-bottom: -6.25vw;
-      padding: 15vw 0;
+      padding: 5vh 0;
       @media all and (min-width: 512px){
         margin-bottom: -32px;
-        padding: 204px 0;
+        padding: 70px 0;
       }
-      @media all and (max-width: 184px){
+      @media all and (max-width: 400px){
         margin-bottom: -20px;
         margin-bottom: -11.5px;
-        padding: 73px 0;
+        padding: 100px 0;
       }
       #timer {
         $hover: 5;
@@ -246,5 +244,35 @@
         font-size: 14px;
         padding: 7px;
       }
+    }
+  }
+  .ending-session-container {
+    position: fixed;
+    z-index: 100;
+    top: 240px;
+    left: 0;
+    height: 300px;
+    width: 90%;
+    margin: 10px 10px;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 20px;
+    background: linear-gradient(
+      45deg,
+      #4b4646 30%,
+      #777373 40%,
+      #616060 60%,
+      #8d8888 90%
+    );
+    box-shadow: 3px 5px 15px 4px $Color2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    .ending-message {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 600;
+      color: $Color1;
     }
   }

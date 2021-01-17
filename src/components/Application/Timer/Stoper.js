@@ -5,53 +5,74 @@ import { FaPlay,  FaPause, FaStopCircle, FaAngleDoubleUp, FaAngleDoubleDown} fro
 
 const Stoper = () => {
     const [sessionTime, setSessionTime] = useState(30);
-    const [countSessionMinutes, setCountSessionMinutes] = useState(sessionTime);
-    const [seconds, setSeconds ] =  useState(0);
-    const [isRunning, setIsRunning] = useState(false)
-    
-    useEffect(()=>{
-        if(isRunning) {
-        const id = setInterval(() => {
-            if(countSessionMinutes === sessionTime) {
-                setCountSessionMinutes(countSessionMinutes => countSessionMinutes -1);
-            }
-        if (seconds > 0) {
-            setSeconds(seconds => seconds - 1)
-            setCountSessionMinutes(countSessionMinutes => countSessionMinutes -1)
-        }
-        if (seconds === 0) {
-            setCountSessionMinutes(countSessionMinutes => countSessionMinutes - 1);
-            (setSeconds(59))};
-            if (countSessionMinutes === 0 && seconds === 0) {
-                clearInterval(id)
-            }
-        } 
-    , 1000); 
-    return () => {clearInterval(id)}   
-    } return undefined;
-    }, [isRunning, seconds, countSessionMinutes]);
+    const [isRunning, setIsRunning] = useState(false);
+    const [doneMeditationTime, setDoneMeditationTime] = useState(0);
+    const [second, setSecond] = useState('00');
+    const [minute, setMinute] = useState('00');
+    const [counter, setCounter] = useState(0);
+    const [ endSession ,setEndSession] = useState(false)
 
+    useEffect(() => {
+      let intervalId;
+  
+      if (isRunning) {
+        intervalId = setInterval(() => {
+          const secondCounter = counter % 60;
+          const minuteCounter = Math.floor(counter / 60);
+  
+          const computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}`: secondCounter;
+          const computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}`: minuteCounter;
+  
+          setSecond(computedSecond);
+          setMinute(computedMinute);
+        
+          setCounter(counter => counter + 1);
+          console.log("counter", counter, "sessionTime", sessionTime);
+          if(counter == (sessionTime * 60)) {
+            clearInterval(intervalId)
+            setIsRunning(false);
+            setDoneMeditationTime(counter);
+            setEndSession(true);
+          }
+        }, 1000)
+      }
+  
+      return () => clearInterval(intervalId);
+    }, [isRunning, counter])
     
-
+  
+    const finishSession = () => {
+      setIsRunning(false);
+      setDoneMeditationTime(counter);
+      setEndSession(true);
+    }
+  
     const setTimeSesionHandler = (e) => {
     setSessionTime(e.target.value)
     } 
+
     return (
 <section className="stoper-container">
+  {endSession && (
+    <div className="ending-session-container">
+      <h1 className="ending-message">Dziękujemy Ci z twoją praktykę!</h1> 
+
+    </div>
+  )}
  <div id="pomodoro">
   <div id="clock">
     <div id="timer">
       <div id="title">{ isRunning ? `Twoja praktyka` : `Gotowy?`}</div>
       <div id="countdown">
-        <span id="minutes">{sessionTime}</span>
-        <span id="seconds">{seconds < 10 ? `0${seconds}` : seconds}</span>
+        <span id="minutes">{minute}</span>
+        <span id="seconds">{second}</span>
       </div>
       <div id="controls" className="reset">
           {isRunning
           ? <div onClick={() => setIsRunning(false)} id="pause"><FaPause className="fa-pause"></FaPause> Paza</div>
           : <div onClick={() => setIsRunning(true)} id="start"><FaPlay className="fa-play"></FaPlay> Start</div>
         }
-        <div id="reset"><FaStopCircle className="fa-stop-circle"></FaStopCircle> Koniec Praktyki</div>
+        <div onClick={() => finishSession()} id="reset"><FaStopCircle className="fa-stop-circle"></FaStopCircle> Koniec Praktyki</div>
       </div>
     </div>
   </div>
