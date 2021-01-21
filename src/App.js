@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }from 'react';
 import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -9,21 +9,42 @@ import MeditationApp from "./layouts/MeditationApp";
 
 
 function App() {
+    const [register, setRegister] = useState(true);
+    const [login, setLogin] = useState(false);
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+
   return (
     <>
-    <Header/>
+    <Header login={login}/>
     <Switch>  
       <Route exact path="/">
         <HomePage/>
       </Route>
       <Route path="/zaloguj">
-        <Login/>
+        <Login
+        password={password}
+        register={register}
+        setLogin={setLogin}
+        email={email}/>
       </Route>
       <Route path="/rejestracja">
-        <Register/>
+        <Register 
+        name={name}
+        setName={setName}
+        email={email}
+        setEmail={setEmail} 
+        setPassword={setPassword}
+        password={password}
+        confirmPassword={confirmPassword} 
+        setConfirmPassword={setConfirmPassword} 
+        setRegister={setRegister}/>
       </Route>
       <Route path="/aplikacja">
-        <MeditationApp/>
+        <MeditationApp
+        login={login}/>
       </Route>
     </Switch>
     <Footer/>

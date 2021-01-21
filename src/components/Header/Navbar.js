@@ -15,10 +15,10 @@ font-family: Raleway;
     justify-content: flex-end;
 }
 `
-const Navbar = () => {
+const Navbar = ({login}) => {
     return (
-        <Nav>
-        <Burger/>
+        <Nav >
+        <Burger login={login}/>
         </Nav>
     )
 }

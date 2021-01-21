@@ -6,7 +6,7 @@ import Calendar from "../components/Application/Calendar";
 import History from "../components/Application/History";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-export default function MeditationApp() {
+export default function MeditationApp(login) {
     const {path} = useRouteMatch();
     return (
         <div className="app-container">
