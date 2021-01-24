@@ -1,39 +1,61 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import "./Login.scss";
 import firebase from "../utils/firebase";
+import Button from "../components/Button";
+import {FaGoogle} from "react-icons/fa";
+import { Redirect } from "react-router-dom";
+import { addUserToStore } from "../utils/addUserToStore";
 
-export default function Login({password, register, setLogin, email}) {
+export default function Login({password, register, setLogin, email, login}) {
     const [tipedPassword,setTipedPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmialError] = useState(false);
     const [tipedEmial, setTipedEmail] = useState('');
-    const loginHandler = (e) => {
-        e.preventDefault;
-        if(password !== tipedPassword) {
-            return setPasswordError(true);
-        }
-        if(email !== tipedEmial) {
-             return setEmialError(true);
-        }
 
-        if(password === tipedPassword && email === tipedEmial ) {
-            setLogin(true);
-            firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(e => {
-                console.log(e)
-            })
-            return <Redirect to={"/aplikacja"}/>
+    const valitation = () => {
+        if(password !== tipedPassword) {
+            setPasswordError(true);
+       } 
+       if(email !== tipedEmial) {
+            setEmialError(true);
+       } if(password === tipedPassword && email === tipedEmial ) {
+           setLogin(true);
+           firebase
+           .auth()
+           .signInWithEmailAndPassword(email, password)
+           .then(response => {
+               console.log(response)
+           })
+           .catch(e => {
+               console.log(e)
+           });
         }
+    }
+        
+    const loginHandler = (e) => {
+        // e.preventDefault;
+        // valitation();
+        
+    }
+    const googleAuthHandler = () => {
+        const provaider = new firebase.auth.GoogleAuthProvider();
+        firebase
+        .auth()
+        .signInWithPopup(provaider)
+        .then((result) => {
+            setLogin(true);
+            addUserToStore(result)
+            console.log(result)
+        })
+        .catch((e) => {
+            console.log(e)
+        })
     }
     
 
     return (
+        <>
+        {login && <Redirect to="aplikacja"/>}
         <section className="login">
         <form onSubmit={(e) => loginHandler(e)} className="login-form">
             <h2 className="login-header">Zaloguj się do aplikacji</h2>
@@ -47,11 +69,15 @@ export default function Login({password, register, setLogin, email}) {
                  <input onChange={(e) => setTipedPassword(e.target.value)} className="register-input"type="password"></input>
                  {passwordError && <span style={{color: "red", fontSize: "8px", display: "block"}}>ZŁE HASŁO</span>}
              </label>
+             <label className="login-label" >ZALOGUJ SIĘ PRZEZ KONTO GOOGLE 
+                 <Button onClick={() => googleAuthHandler()}  type="email"><FaGoogle/>GOOGLE</Button>
+             </label>
             
 
              <button className="btn submit-btn" type="submit">ZALOGUJ SIĘ</button>
          </div>
      </form> 
      </section>
+     </>
     )
 }

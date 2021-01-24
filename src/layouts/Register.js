@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Redirect } from "react-router-dom";
+import VerifyPopup from "../components/Register/VerifyPopup";
 import "./Register.scss";
-import firebase from "../utils/firebase";
+import { addUserToStore } from "../utils/addUserToStore";
+import firebase, {  usersCollection } from "../utils/firebase";
 
 export default function Register({name, setName, setEmail, setPassword, 
-    password, email, confirmPassword, setConfirmPassword, setRegister}) {
+    password, email, confirmPassword, setConfirmPassword, setRegister, register}) {
 
-    const [passwordError, setPasswordError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false);
+
+    
 
     const registerHandler = (e) => {
         e.preventDefault;
@@ -19,20 +22,24 @@ export default function Register({name, setName, setEmail, setPassword,
             firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(response => {
-                console.log(response)
+            .then(user => {
+                addUserToStore(user);
+                user.user.sendEmailVerification().then(()=> {
+                    console.log('mail sent')
+                })
             })
             .catch(e => {
                 console.log(e)
-            })
-            return <Redirect to={"/zaloguj"}
+            });
+        
         }
     }
 
 
     return (
         <section className="register">
-           <form onSubmit={() => registerHandler(e)} className="register-form">
+            {register && <VerifyPopup/>}
+           <form onSubmit={(e) => registerHandler(e)} className="register-form">
            <h2 className="register-header">Zarejestruj sie żeby korzystać z naszej aplikacji</h2>
             <div className="register-container">
                 <label className="register-label">PODAJ SWOJE IMIĘ

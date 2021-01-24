@@ -7,12 +7,14 @@
   align-self: center;
   font-family: $Font1;
   font-weight: 600;
-  margin: 15px 10;
+  margin: 15px 10px;
   background-color: $Color3;
   color: $Color1;
   border-radius: 10px;
   border: 1px solid $Color1;
   box-shadow: 4px 1px 10px 1px $Color2;
+  cursor: pointer;
+  text-decoration: none;
   outline: none;
   &:hover,
   &:active,

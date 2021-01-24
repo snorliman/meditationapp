@@ -28,6 +28,7 @@ function App() {
         password={password}
         register={register}
         setLogin={setLogin}
+        login={login}
         email={email}/>
       </Route>
       <Route path="/rejestracja">
@@ -40,6 +41,7 @@ function App() {
         password={password}
         confirmPassword={confirmPassword} 
         setConfirmPassword={setConfirmPassword} 
+        register={register}
         setRegister={setRegister}/>
       </Route>
       <Route path="/aplikacja">

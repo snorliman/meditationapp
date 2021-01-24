@@ -1,58 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaTrashAlt } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.scss";
+import firebase, { usersCollection } from "../../utils/firebase";
+import { firebaseLooper } from "../../utils/tools";
 import uuid from 'react-uuid';
-
-const convertDate = str => {
-  str = str.toString();
-  let parts = str.split(" ");
-  let months = {
-  Jan: "Styczeń",
-  Feb: "Luty",
-  Mar: "Marzec",
-  Apr: "Kwiecień",
-  May: "Maj",
-  Jun: "Czerwiec",
-  Jul: "Lipiec",
-  Aug: "Sierpień",
-  Sep: "Wrzesień",
-  Oct: "Październik",
-  Nov: "Listopad",
-  Dec: "Grudzień",
-}
-let days = {
-  Mon: "Poniedziałek",
-  Tue: "Wtorek",
-  Wed: "Środa",
-  Thu: "Czwartek",
-  Fri: "Piątek",
-  Sat: "Sobota",
-  Sun: "Niedziela"
-
-}
-  
-  return ` ${days[parts[0]]} ${parts[2]} ${months[parts[1]]} ${parts[3]} ${parts[4]}`;
-}
+import { convertDate } from "../../utils/convertDate.js"
 
 
-export default function App() {
+
+export default function Calendar() {
   const [startDate, setStartDate] = useState(new Date());
   const [timeOfSession, setTimeOfsession] = useState(5);
  const [addedSession, setAddedSession] = useState([]);
-  const newSessionHandler = () => {
-    const newSession = addedSession;
-    newSession.push({
-      id: uuid(),
-      date: startDate, 
-      duration: timeOfSession
-    });
-    return setAddedSession([...newSession]);
+
+ useEffect((data, id) => {
+
+    usersCollection.doc(data.user.uid).get()
+    .then(snapshot => {
+    firebaseLooper(snapshot);
+    // setAddedSession(doc.planedsession);
+    })
+    .catch(e => console.log(e));
+
+    newSessionHandler(data);
+    deleteAddedSession(data,id);
+
+ }, [addedSession])
+
+  const newSessionHandler = (data) => {
+
+    usersCollection.doc(data.user.uid).update({
+      ...data.user.data(),
+      planedsession: firebase.firestore.FieldValue.arrayUnion({
+        id: uuid(),
+        date: startDate,
+        duration: timeOfSession
+      })
+    })
+
   }
-  const deleteAddedSession = (id) => {
-    const filteredSession = [...addedSession].filter(item => item.id !== id)
-    return setAddedSession([...filteredSession]);
+  const deleteAddedSession = (data, id) => {
+    // const filteredSession = [...addedSession].filter(item => item.id !== id)
+    // return setAddedSession([...filteredSession]);
+
+    usersCollection.doc(data.user.uid).update({
+      ...data.user.data(),
+      planedsession: firebase.firestore.FieldValue.arrayRemove({
+        id: id
+      })
+    })
     
   }
 
