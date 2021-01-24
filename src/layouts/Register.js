@@ -12,7 +12,7 @@ export default function Register({name, setName, setEmail, setPassword,
     
 
     const registerHandler = (e) => {
-        e.preventDefault;
+        e.preventDefault();
 
         if(password !== confirmPassword) {
             setPasswordError(true)
@@ -46,7 +46,7 @@ export default function Register({name, setName, setEmail, setPassword,
                     <input onChange={(e) => setName(e.target.value)} className="register-input" value={name} type="name"></input>
                 </label >
                 <label className="register-label" >PODAJ SWÓJ ADRES EMAIL 
-                    <input onChange={(e) => setEmail(e.target.value)} className="register-input" value={emial} type="email"></input>
+                    <input onChange={(e) => setEmail(e.target.value)} className="register-input" value={email} type="email"></input>
                 </label>
                 <label className="register-label">WPISZ SWOJE HASŁO
                     <input onChange={(e) => setPassword(e.target.value)} className="register-input" value={password} type="password"></input>

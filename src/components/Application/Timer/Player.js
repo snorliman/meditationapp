@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from React;
+import React, { useState, useEffect, useRef } from "react";
 import { FaFileAudio, FaForward, FaBackward } from "react-icons/fa"
 
 export default function Player ({currentSongIndex,

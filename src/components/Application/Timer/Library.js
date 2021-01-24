@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Library.scss";
-import { musicLibrary } from "../../../utils/musicData";
+import { musicList } from "../../../utils/musicData";
 import Player from "./Player";
 
 const Library = ({isRunning}) => {
-const [songs, setSongs] = useState(musicLibrary);
+const [songs, setSongs] = useState(musicList);
 const [currentSongIndex, setCurrentSongIndex] = useState(0);
 const [nextSongIndex, setNextSongIndex] = useState(currentSongIndex + 1);
 

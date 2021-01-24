@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.scss";
 import firebase from "../utils/firebase";
-import Button from "../components/Button";
+import Button from "../components/Button/Button";
 import {FaGoogle} from "react-icons/fa";
 import { Redirect } from "react-router-dom";
 import { addUserToStore } from "../utils/addUserToStore";
@@ -33,8 +33,8 @@ export default function Login({password, register, setLogin, email, login}) {
     }
         
     const loginHandler = (e) => {
-        // e.preventDefault;
-        // valitation();
+        e.preventDefault();
+        valitation();
         
     }
     const googleAuthHandler = () => {

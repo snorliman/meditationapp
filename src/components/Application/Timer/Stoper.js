@@ -1,9 +1,8 @@
-import React from "react";
 import "./Stoper.scss";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlay,  FaPause, FaStopCircle, FaAngleDoubleUp, FaAngleDoubleDown} from 'react-icons/fa';
 
-const Stoper = ({setIsRunning}) => {
+const Stoper = ({setIsRunning, isRunning}) => {
     const [sessionTime, setSessionTime] = useState(30);
     const [doneMeditationTime, setDoneMeditationTime] = useState(0);
     const [second, setSecond] = useState('00');
