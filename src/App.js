@@ -5,7 +5,9 @@ import Footer from "./components/Footer/Footer";
 import HomePage from "./layouts/HomePage";
 import Login from "./layouts/Login";
 import Register from "./layouts/Register";
+import PrivetRoute from "./utils/PrivetRoute";
 import MeditationApp from "./layouts/MeditationApp";
+import { AuthProvaider } from "./utils/ContextAuth";
 
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
     const [name, setName] = useState('');
 
   return (
-    <>
+    <AuthProvaider>
     <Header login={login}/>
     <Switch>  
       <Route exact path="/">
@@ -44,13 +46,13 @@ function App() {
         register={register}
         setRegister={setRegister}/>
       </Route>
-      <Route path="/aplikacja">
+      <PrivetRoute path="/aplikacja">
         <MeditationApp
         login={login}/>
-      </Route>
+      </PrivetRoute>
     </Switch>
     <Footer/>
-    </>
+    </AuthProvaider>
     
   );
 }

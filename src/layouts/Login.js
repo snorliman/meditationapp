@@ -1,55 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Login.scss";
 import firebase from "../utils/firebase";
 import Button from "../components/Button/Button";
 import {FaGoogle} from "react-icons/fa";
 import { Redirect } from "react-router-dom";
-import { addUserToStore } from "../utils/addUserToStore";
+import { useAuth } from "../utils/ContextAuth";
+import { Link,  useHistory } from "react-router-dom";
 
 export default function Login({password, register, setLogin, email, login}) {
-    const [tipedPassword,setTipedPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmialError] = useState(false);
-    const [tipedEmial, setTipedEmail] = useState('');
+    const [loading, setLoading] = useState(false)
+
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const { signUp } = useAuth();
+    const history = useHistory();
+    let unmouted = false
+    useEffect(()=> {
+        
+        loginUser(unmouted)
+
+        return () => {
+            unmouted = true
+        }
+    }, [])
+
+    function loginUser(unmouted) {
+            if(passwordRef)
+            firebase
+            .auth()
+            .signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
+            .then(data => {
+                console.log("zalogowano", data.user)
+                history.push("/aplikacja");
+            })
+            .catch(e => {
+                console.log(e)
+            });
+        
+        };
+        const loginHandler = (e) => {
+            e.preventDefault();
+            loginUser(unmouted)
+        }
+    
 
     const valitation = () => {
-        if(password !== tipedPassword) {
-            setPasswordError(true);
-       } 
-       if(email !== tipedEmial) {
-            setEmialError(true);
-       } if(password === tipedPassword && email === tipedEmial ) {
-           setLogin(true);
-           firebase
-           .auth()
-           .signInWithEmailAndPassword(email, password)
-           .then(response => {
-               console.log(response)
-           })
-           .catch(e => {
-               console.log(e)
-           });
-        }
+    //     if(password !== tipedPassword) {
+    //         setPasswordError(true);
+    //    } 
+    //    if(email !== tipedEmial) {
+    //         setEmialError(true);
+    //    } if(password === tipedPassword && email === tipedEmial ) {
+    //        setLogin(true);
+    //        setEmialError(false);
+    //        setPasswordError(false);
+    //        firebase
+    //        .auth()
+    //        .signInWithEmailAndPassword(email, password)
+    //        .then(response => {
+    //            console.log(response)
+    //        })
+    //        .catch(e => {
+    //            console.log(e)
+    //        });
+    //     }
     }
         
-    const loginHandler = (e) => {
-        e.preventDefault();
-        valitation();
+    // async function loginHandler (e){
+    //     e.preventDefault();
+    //     try {
+    //         setPasswordError("");
+    //         setLoading(true);
+    //     await login(emailRef.current.value, passwordRef.current.value)
+    //     history.push("/aplikacja");
+    //     } catch {
+    //         setPasswordError("Nie udało się zalogować")
+    //     }
+    //     setLoading(false);
+
+    //     // valitation();
         
-    }
+    // }
     const googleAuthHandler = () => {
-        const provaider = new firebase.auth.GoogleAuthProvider();
-        firebase
-        .auth()
-        .signInWithPopup(provaider)
-        .then((result) => {
-            setLogin(true);
-            addUserToStore(result)
-            console.log(result)
-        })
-        .catch((e) => {
-            console.log(e)
-        })
+        // const provaider = new firebase.auth.GoogleAuthProvider();
+        // firebase
+        // .auth()
+        // .signInWithPopup(provaider)
+        // .then((result) => {
+            
+        //     addUserToStore(result);
+        //     setLogin(true);
+        //     console.log(result)
+        // })
+        // .catch((e) => {
+        //     console.log(e)
+        // })
     }
     
 
@@ -62,11 +109,11 @@ export default function Login({password, register, setLogin, email, login}) {
          <div className="login-container">
              
              <label className="login-label" >PODAJ SWÓJ ADRES EMAIL 
-                 <input onChange={(e) => setTipedEmail(e.target.value)} className="register-input" type="email"></input>
+                 <input ref={emailRef} required className="register-input" type="email"></input>
                  {emailError && <span style={{color: "red",fontSize: "8px", display: "block" }}>ZŁY EMAIL</span>}
              </label>
              <label className="login-label">WPISZ SWOJE HASŁO
-                 <input onChange={(e) => setTipedPassword(e.target.value)} className="register-input"type="password"></input>
+                 <input ref={passwordRef} required className="register-input"type="password"></input>
                  {passwordError && <span style={{color: "red", fontSize: "8px", display: "block"}}>ZŁE HASŁO</span>}
              </label>
              <label className="login-label" >ZALOGUJ SIĘ PRZEZ KONTO GOOGLE 
@@ -75,6 +122,7 @@ export default function Login({password, register, setLogin, email, login}) {
             
 
              <button className="btn submit-btn" type="submit">ZALOGUJ SIĘ</button>
+             <h2>Nie masz konta?<Link to="/rejestracja">Zarejestruj się</Link></h2>
          </div>
      </form> 
      </section>

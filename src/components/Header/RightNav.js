@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { HashLink } from 'react-router-hash-link';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth } from "../../utils/ContextAuth"; 
 import firebase from "../../utils/firebase";
 
 const Ul = styled.ul`
@@ -54,7 +55,10 @@ const linkstyle = {
 
 
 
-const RightNav = ({open, onclick, login}) => {
+const RightNav = ({open, onclick }) => {
+
+    const { currentUser } = useAuth();
+    const history = useHistory();
 
     const logoutHandler = () => {
         onclick(false);
@@ -63,6 +67,7 @@ const RightNav = ({open, onclick, login}) => {
         .singOut()
         .then(() => {
             console.log("user log out")
+            history.push("/")
         })
     }
     return (
@@ -72,9 +77,8 @@ const RightNav = ({open, onclick, login}) => {
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#how-to-use-app"> <li>JAK UŻYWAĆ APLIKACJI</li></HashLink>
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#contact"><li>KONTAKT</li></HashLink>
             <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/rejestracja"> <li>ZAREJESTRUJ SIĘ</li></Link>
-            {login 
-            ? <Link onClick={() => logoutHandler()} exact to="/" style={linkstyle} id="nav-item" ><li>WYLOGUJ SIĘ</li></Link> 
-            : <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="zaloguj"><li>ZALOGUJ SIĘ</li></Link>}  
+            {/* {currentUser === null ? <Link onClick={() => logoutHandler()} exact to="/" style={linkstyle} id="nav-item" ><li>WYLOGUJ SIĘ</li></Link>: */}
+             <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/zaloguj"><li>ZALOGUJ SIĘ</li></Link>}  
         </Ul>
     )
 }

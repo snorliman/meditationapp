@@ -19,15 +19,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-firebase.auth()
-.onAuthStateChanged(user => {
-  if(user) {
-    console.log(user.uid)
-
-  } else {
-    console.log("no user")
-  }
-})
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

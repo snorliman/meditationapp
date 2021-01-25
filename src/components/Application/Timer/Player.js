@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "./Player.scss"
 import { FaFileAudio, FaForward, FaBackward } from "react-icons/fa"
 
 export default function Player ({currentSongIndex,
@@ -35,13 +36,16 @@ export default function Player ({currentSongIndex,
     }
     }
     return(
-        <div>
+        <div className="player">
             <h3>WYBIERZ MUZYKĘ DO MEDTACJI</h3>
+            <h5>Wybrana ścieżka:</h5>
             <span>{songs[currentSongIndex].title}</span>
             <audio src={songs[currentSongIndex].src} ref={audioEl}></audio>
-            <FaBackward onClick={() => skipSong(false)}/>
-            <FaFileAudio/>
-            <FaForward onClick={() => skipSong()}/>
+            <div className="controls">
+                <FaBackward onClick={() => skipSong(false)}/>
+                <FaFileAudio/>
+                <FaForward onClick={() => skipSong()}/>
+            </div>
 
         </div>
     )

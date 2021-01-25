@@ -1,40 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import VerifyPopup from "../components/Register/VerifyPopup";
 import "./Register.scss";
 import { addUserToStore } from "../utils/addUserToStore";
-import firebase, {  usersCollection } from "../utils/firebase";
+import firebase, { usersCollection } from "../utils/firebase";
+import { useAuth } from "../utils/ContextAuth";
+import {  useHistory } from "react-router-dom";
 
 export default function Register({name, setName, setEmail, setPassword, 
     password, email, confirmPassword, setConfirmPassword, setRegister, register}) {
 
+        const emailRef = useRef();
+        const passwordRef = useRef();
+        const confirmPasswordRef = useRef();
+        const nameRef = useRef();
+        const { signUp } = useAuth();
+        const history = useHistory();
+
     const [passwordError, setPasswordError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    let unmouted = false
+    useEffect(()=> {
+        
+        registerUser(unmouted)
 
-    
+        return () => {
+            unmouted = true
+        }
+    }, [])
 
-    const registerHandler = (e) => {
-        e.preventDefault();
-
+    function registerUser(unmouted) {
         if(password !== confirmPassword) {
             setPasswordError(true)
         }
         else {
-            setRegister(true);
+            if(!unmouted)
             firebase
             .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(user => {
-                addUserToStore(user);
-                user.user.sendEmailVerification().then(()=> {
-                    console.log('mail sent')
-                })
+            .createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
+            .then(credential => {
+                
+                return usersCollection.doc(credential.user.uid).set({
+                    email: credential.user.email,
+                    name: nameRef.current.value,
+                    extrasession: [],
+                    failedsession: [],
+                    partlydonesession: [],
+                    planedsession: [],
+                    sucesssession: [],
+                    totaltime: 0
+                });
+            }).then(() => {
+                console.log("added user to firestore");
+                history.push("/zaloguj");
             })
             .catch(e => {
                 console.log(e)
             });
         
-        }
+        };
     }
-
+        
+    // async function registerUser(unmouted) {
+    //     if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+    //         setPasswordError("hasła muszą być takie same")
+    //     }
+    //     try {
+    //         setPasswordError("");
+    //         setLoading(true);
+    //         if(!unmouted)
+    //         await signUp(emailRef.current.value, passwordRef.current.value);
+    //     history.push('/zaloguj')
+    //     } catch {
+    //         setPasswordError("Nie udało się stworzyć konta")
+    //     }
+    //     setLoading(false);
+    // }
+     function registerHandler (e) {
+        e.preventDefault();
+        registerUser(unmouted)   
+    }
+       
 
     return (
         <section className="register">
@@ -43,21 +88,21 @@ export default function Register({name, setName, setEmail, setPassword,
            <h2 className="register-header">Zarejestruj sie żeby korzystać z naszej aplikacji</h2>
             <div className="register-container">
                 <label className="register-label">PODAJ SWOJE IMIĘ
-                    <input onChange={(e) => setName(e.target.value)} className="register-input" value={name} type="name"></input>
+                    <input ref={nameRef} required className="register-input" type="name"></input>
                 </label >
                 <label className="register-label" >PODAJ SWÓJ ADRES EMAIL 
-                    <input onChange={(e) => setEmail(e.target.value)} className="register-input" value={email} type="email"></input>
+                    <input ref={emailRef} required className="register-input"  type="email"></input>
                 </label>
                 <label className="register-label">WPISZ SWOJE HASŁO
-                    <input onChange={(e) => setPassword(e.target.value)} className="register-input" value={password} type="password"></input>
+                    <input ref={passwordRef} required className="register-input" type="password"></input>
                 </label>
                 <label className="register-label">POWTÓRZ SWOJE HASŁO
-                    <input onChange={(e) => setConfirmPassword(e.target.value)} 
-                    className="register-input" value={confirmPassword} type="password"></input>
-                    {passwordError && <span style={{color: "red", fontSize: "8px", display: "block"}}>HASŁO MUSI BYĆ IDENTYCZNE</span>}
+                    <input
+                    className="register-input"  ref={confirmPasswordRef} required type="password"></input>
+                    {passwordError && <span style={{color: "red", fontSize: "8px", display: "block"}}>{passwordError}</span>}
                 </label>
 
-                <button className="btn submit-btn" type="submit">STWÓRZ KONTO</button>
+                <button disabled={loading} className="btn submit-btn" type="submit">STWÓRZ KONTO</button>
             </div>
         </form> 
         </section>

@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.scss";
 import firebase, { usersCollection } from "../../utils/firebase";
-import { firebaseLooper } from "../../utils/tools";
+import { useAuth } from "../../utils/ContextAuth";
 import uuid from 'react-uuid';
 import { convertDate } from "../../utils/convertDate.js"
 
@@ -15,17 +15,21 @@ export default function Calendar() {
   const [timeOfSession, setTimeOfsession] = useState(5);
  const [addedSession, setAddedSession] = useState([]);
 
- useEffect((data, id) => {
+ const { currentUser } = useAuth();
 
-    usersCollection.doc(data.user.uid).get()
+ useEffect((currentUser, id) => {
+
+    usersCollection.doc(currentUser..uid).get()
     .then(snapshot => {
-    firebaseLooper(snapshot);
+    snapshot.docs.forEach(doc => {
+      console.log(doc)
+    });
     // setAddedSession(doc.planedsession);
     })
     .catch(e => console.log(e));
 
-    newSessionHandler(data);
-    deleteAddedSession(data,id);
+    newSessionHandler(currentUser);
+    deleteAddedSession(currentUser);
 
  }, [addedSession])
 

@@ -1,5 +1,6 @@
 import { usersCollection } from "../utils/firebase";
 
+
 export const addUserToStore = (data) => {
     usersCollection.doc(data.user.uid).set({
         email: data.user.email,
@@ -12,7 +13,7 @@ export const addUserToStore = (data) => {
         totaltime: 0
     }).then((data) => {
         console.log(data)
-    }). catch((e) => {
+    }).catch((e) => {
         console.log(e)
     })
 }

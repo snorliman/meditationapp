@@ -26,7 +26,7 @@ const Stoper = ({setIsRunning, isRunning}) => {
         
           setCounter(counter => counter + 1);
           console.log("counter", counter, "sessionTime", sessionTime);
-          if(counter == (sessionTime * 60)) {
+          if(counter === (sessionTime * 60)) {
             clearInterval(intervalId)
             setIsRunning(false);
             setDoneMeditationTime(counter);
