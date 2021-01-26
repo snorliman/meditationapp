@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "./firebase";
+import { auth, usersCollection } from "./firebase";
 
 const AuthContext = React.createContext();
 
@@ -20,12 +20,18 @@ function login(email, password) {
 }
 useEffect(()=> {
     const unsubscribe =auth.onAuthStateChanged(user => {
-        setLoading(false)
-        setCurrentUser(user);
-        console.log(currentUser)
-    })
+        if(user) {
+            setLoading(false)
+            setCurrentUser(user)
+            console.log( "user", user, "currentUser" ,currentUser);
+            usersCollection.doc(user.uid)
+
+            
+        
+    } else auth.signOut();
+})
     return unsubscribe;
-},[])
+},[currentUser])
 
 
 const value = {
@@ -35,7 +41,7 @@ const value = {
 }
  return (
     <AuthContext.Provider value={value}>
-        {!loading &&children}
+        {!loading && children}
     </AuthContext.Provider>
  )
 }

@@ -3,70 +3,45 @@ import "./Login.scss";
 import firebase from "../utils/firebase";
 import Button from "../components/Button/Button";
 import {FaGoogle} from "react-icons/fa";
-import { Redirect } from "react-router-dom";
-import { useAuth } from "../utils/ContextAuth";
 import { Link,  useHistory } from "react-router-dom";
 
 export default function Login({password, register, setLogin, email, login}) {
-    const [passwordError, setPasswordError] = useState(false);
-    const [emailError, setEmialError] = useState(false);
-    const [loading, setLoading] = useState(false)
-
+    const [error, setError] = useState("");
+    const [ unmouted, setUnmouted] = useState(false)
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { signUp } = useAuth();
     const history = useHistory();
-    let unmouted = false
     useEffect(()=> {
         
         loginUser(unmouted)
 
         return () => {
-            unmouted = true
+            setUnmouted(true)
         }
-    }, [])
+    }, [unmouted])
 
     function loginUser(unmouted) {
-            if(passwordRef)
+         if(!unmouted && passwordRef) {
+            setError('');
             firebase
             .auth()
             .signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
-            .then(data => {
-                console.log("zalogowano", data.user)
+            .then(() => {
+                console.log("zalogowano" )
                 history.push("/aplikacja");
             })
             .catch(e => {
                 console.log(e)
             });
-        
+        } else {
+            setError("złe hasło lub email")
+        }
         };
         const loginHandler = (e) => {
             e.preventDefault();
             loginUser(unmouted)
         }
     
-
-    const valitation = () => {
-    //     if(password !== tipedPassword) {
-    //         setPasswordError(true);
-    //    } 
-    //    if(email !== tipedEmial) {
-    //         setEmialError(true);
-    //    } if(password === tipedPassword && email === tipedEmial ) {
-    //        setLogin(true);
-    //        setEmialError(false);
-    //        setPasswordError(false);
-    //        firebase
-    //        .auth()
-    //        .signInWithEmailAndPassword(email, password)
-    //        .then(response => {
-    //            console.log(response)
-    //        })
-    //        .catch(e => {
-    //            console.log(e)
-    //        });
-    //     }
-    }
         
     // async function loginHandler (e){
     //     e.preventDefault();
@@ -102,7 +77,6 @@ export default function Login({password, register, setLogin, email, login}) {
 
     return (
         <>
-        {login && <Redirect to="aplikacja"/>}
         <section className="login">
         <form onSubmit={(e) => loginHandler(e)} className="login-form">
             <h2 className="login-header">Zaloguj się do aplikacji</h2>
@@ -110,11 +84,10 @@ export default function Login({password, register, setLogin, email, login}) {
              
              <label className="login-label" >PODAJ SWÓJ ADRES EMAIL 
                  <input ref={emailRef} required className="register-input" type="email"></input>
-                 {emailError && <span style={{color: "red",fontSize: "8px", display: "block" }}>ZŁY EMAIL</span>}
+                 {error && <span style={{color: "red",fontSize: "8px", display: "block" }}>{error}</span>}
              </label>
              <label className="login-label">WPISZ SWOJE HASŁO
                  <input ref={passwordRef} required className="register-input"type="password"></input>
-                 {passwordError && <span style={{color: "red", fontSize: "8px", display: "block"}}>ZŁE HASŁO</span>}
              </label>
              <label className="login-label" >ZALOGUJ SIĘ PRZEZ KONTO GOOGLE 
                  <Button onClick={() => googleAuthHandler()}  type="email"><FaGoogle/>GOOGLE</Button>

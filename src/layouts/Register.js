@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import VerifyPopup from "../components/Register/VerifyPopup";
 import "./Register.scss";
-import { addUserToStore } from "../utils/addUserToStore";
 import firebase, { usersCollection } from "../utils/firebase";
-import { useAuth } from "../utils/ContextAuth";
 import {  useHistory } from "react-router-dom";
 
 export default function Register({name, setName, setEmail, setPassword, 
@@ -13,20 +11,19 @@ export default function Register({name, setName, setEmail, setPassword,
         const passwordRef = useRef();
         const confirmPasswordRef = useRef();
         const nameRef = useRef();
-        const { signUp } = useAuth();
         const history = useHistory();
 
     const [passwordError, setPasswordError] = useState(false);
     const [loading, setLoading] = useState(false);
-    let unmouted = false
+    const [ unmouted, setUnmouted] = useState(false)
     useEffect(()=> {
         
         registerUser(unmouted)
 
         return () => {
-            unmouted = true
+            setUnmouted(true)
         }
-    }, [])
+    }, [unmouted])
 
     function registerUser(unmouted) {
         if(password !== confirmPassword) {
@@ -56,6 +53,7 @@ export default function Register({name, setName, setEmail, setPassword,
             .catch(e => {
                 console.log(e)
             });
+            setLoading(false);
         
         };
     }

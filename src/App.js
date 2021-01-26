@@ -19,7 +19,7 @@ function App() {
     const [name, setName] = useState('');
 
   return (
-    <AuthProvaider>
+    <AuthProvaider >
     <Header login={login}/>
     <Switch>  
       <Route exact path="/">

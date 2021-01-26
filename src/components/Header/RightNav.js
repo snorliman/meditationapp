@@ -77,7 +77,8 @@ const RightNav = ({open, onclick }) => {
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#how-to-use-app"> <li>JAK UŻYWAĆ APLIKACJI</li></HashLink>
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#contact"><li>KONTAKT</li></HashLink>
             <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/rejestracja"> <li>ZAREJESTRUJ SIĘ</li></Link>
-            {/* {currentUser === null ? <Link onClick={() => logoutHandler()} exact to="/" style={linkstyle} id="nav-item" ><li>WYLOGUJ SIĘ</li></Link>: */}
+            {/* {currentUser === undefined 
+            ? <Link onClick={() => logoutHandler()} exact to="/" style={linkstyle} id="nav-item" ><li>WYLOGUJ SIĘ</li></Link>: */}
              <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/zaloguj"><li>ZALOGUJ SIĘ</li></Link>}  
         </Ul>
     )

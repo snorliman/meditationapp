@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./Player.scss"
 import { FaFileAudio, FaForward, FaBackward } from "react-icons/fa"
 

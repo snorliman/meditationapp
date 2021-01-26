@@ -14,46 +14,57 @@ export default function Calendar() {
   const [startDate, setStartDate] = useState(new Date());
   const [timeOfSession, setTimeOfsession] = useState(5);
  const [addedSession, setAddedSession] = useState([]);
+ const user =firebase.auth().currentUser;
 
  const { currentUser } = useAuth();
 
- useEffect((currentUser, id) => {
-
-    usersCollection.doc(currentUser..uid).get()
+ useEffect( () => {
+    const getData = async () => {
+      console.log()
+    await usersCollection.doc(user.uid).get()
     .then(snapshot => {
     snapshot.docs.forEach(doc => {
-      console.log(doc)
+      console.log("doc.data()",doc.data());
+      setAddedSession(doc.planedsession)
     });
-    // setAddedSession(doc.planedsession);
     })
     .catch(e => console.log(e));
 
-    newSessionHandler(currentUser);
-    deleteAddedSession(currentUser);
+    newSessionHandler(user);
+  
+    }
+    getData();
+  } 
 
- }, [addedSession])
+, [user])
 
-  const newSessionHandler = (data) => {
-
-    usersCollection.doc(data.user.uid).update({
-      ...data.user.data(),
-      planedsession: firebase.firestore.FieldValue.arrayUnion({
+  const newSessionHandler = async (user) => {
+  
+    if(user) {
+      const newSession = addedSession;
+      newSession.push({
         id: uuid(),
         date: startDate,
         duration: timeOfSession
-      })
-    })
+      });
+      setAddedSession(newSession)
+    await usersCollection.doc(user.uid).update({
+    
+      planedsession: firebase.firestore.FieldValue.arrayUnion({...addedSession})
+    }).then(() => {
+     
+    }).catch(e => console.log(e))
+  } else
+    console.log(currentUser.user.data())
 
   }
-  const deleteAddedSession = (data, id) => {
+  const deleteAddedSession = (user, id) => {
     // const filteredSession = [...addedSession].filter(item => item.id !== id)
     // return setAddedSession([...filteredSession]);
 
-    usersCollection.doc(data.user.uid).update({
-      ...data.user.data(),
-      planedsession: firebase.firestore.FieldValue.arrayRemove({
-        id: id
-      })
+    usersCollection.doc(user.uid).update({
+      planedsession: firebase.firestore.FieldValue.arrayRemove(`${id}`
+      )
     })
     
   }
@@ -91,7 +102,7 @@ export default function Calendar() {
         <option value="60">60</option>
       </select>
     </label>
-    <button className="calendar-btn" onClick={() => newSessionHandler()}>DODAJ SESJE DO LISTY</button>
+    <button className="calendar-btn" onClick={() => newSessionHandler(user)}>DODAJ SESJE DO LISTY</button>
 
       <div className="session-list">
         <h3 className="calendar-list-header">LISTA TWOICH ZAPLANOWANYCH SESJI</h3>
