@@ -3,10 +3,9 @@ import { FaTrashAlt } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.scss";
-import firebase, { usersCollection } from "../../utils/firebase";
-import { useAuth } from "../../utils/ContextAuth";
+import firebase, {  sessionsCollection } from "../../utils/firebase";
+import { convertDate } from "../../utils/convertDate.js";
 import uuid from 'react-uuid';
-import { convertDate } from "../../utils/convertDate.js"
 
 
 
@@ -14,58 +13,73 @@ export default function Calendar() {
   const [startDate, setStartDate] = useState(new Date());
   const [timeOfSession, setTimeOfsession] = useState(5);
  const [addedSession, setAddedSession] = useState([]);
+ const [loading, setLoading] = useState(false)
+ 
+
  const user =firebase.auth().currentUser;
+ 
+ const fetchData = async () => {
 
- const { currentUser } = useAuth();
+   const listOfplanedSession = [];
 
- useEffect( () => {
-    const getData = async () => {
-      console.log()
-    await usersCollection.doc(user.uid).get()
-    .then(snapshot => {
-    snapshot.docs.forEach(doc => {
-      console.log("doc.data()",doc.data());
-      setAddedSession(doc.planedsession)
-    });
+  await sessionsCollection
+  .where("uid", "==", user.uid)
+  .where("status", "==", "planed")
+  .get()
+  .then(snapshot => {
+    snapshot.forEach(doc => {
+      
+      const session = doc.data();
+        listOfplanedSession.push({
+        date: session.date.toDate(),
+        sessionId: session.sessionId,
+        duration: session.details.planedtime
+      });
+     setAddedSession(listOfplanedSession)
     })
-    .catch(e => console.log(e));
-
-    newSessionHandler(user);
+  }).catch(e => console.log(e));
   
-    }
-    getData();
-  } 
-
-, [user])
+}
+ useEffect( () => {
+   if (user) { 
+    fetchData()
+} else console.log("nie ma usera")
+}, [])
 
   const newSessionHandler = async (user) => {
-  
+  setLoading(true)
     if(user) {
-      const newSession = addedSession;
-      newSession.push({
-        id: uuid(),
-        date: startDate,
-        duration: timeOfSession
-      });
-      setAddedSession(newSession)
-    await usersCollection.doc(user.uid).update({
+      const id = uuid();
+    await sessionsCollection.doc(id).set({
+      uid: user.uid,
+      sessionId: id,
+      status: "planed",
+      date: new Date(startDate),
+      details: {
+        planedtime: timeOfSession,
+        activetime: 0,
+      }
     
-      planedsession: firebase.firestore.FieldValue.arrayUnion({...addedSession})
     }).then(() => {
-     
-    }).catch(e => console.log(e))
-  } else
-    console.log(currentUser.user.data())
-
-  }
-  const deleteAddedSession = (user, id) => {
-    // const filteredSession = [...addedSession].filter(item => item.id !== id)
-    // return setAddedSession([...filteredSession]);
-
-    usersCollection.doc(user.uid).update({
-      planedsession: firebase.firestore.FieldValue.arrayRemove(`${id}`
-      )
+      console.log("startDate", startDate)
+      console.log("dodano sesje")
+    fetchData();
+    setLoading(false)
     })
+    .catch(e => console.log(e))
+  } else setLoading(false)
+}
+  
+  const deleteAddedSession = async (sessionId) => {
+    
+    await sessionsCollection.doc(`${sessionId}`)
+    .delete()
+    .then(() => {
+    // const filteredSession = [...addedSession].filter(item => sessionId !== item.sessionId )
+    // setAddedSession([...filteredSession]);
+    fetchData();
+    console.log("usunięto sesje")})
+    .catch(e => console.log(e))
     
   }
 
@@ -78,7 +92,7 @@ export default function Calendar() {
      <h3 className="datepicker-header">KALENDARZ</h3>
       <DatePicker
       showTimeSelect
-      dateFormat="MMMM d, yyyy h:mmaa"
+      dateFormat=" d, MM, yyyy H:mm"
       selected={startDate}
       selectsStart
       startDate={startDate}
@@ -102,12 +116,12 @@ export default function Calendar() {
         <option value="60">60</option>
       </select>
     </label>
-    <button className="calendar-btn" onClick={() => newSessionHandler(user)}>DODAJ SESJE DO LISTY</button>
+    <button disabled={loading} className="calendar-btn" onClick={() => newSessionHandler(user)}>DODAJ SESJE DO LISTY</button>
 
       <div className="session-list">
         <h3 className="calendar-list-header">LISTA TWOICH ZAPLANOWANYCH SESJI</h3>
- {addedSession && addedSession.map(item => <p className="list-item" key={item.id}>
-   <span>Data Sesji: </span> {`  ${convertDate(item.date)  }`}<span> Czas sesji: </span> {`${item.duration   }`}<FaTrashAlt onClick={()=> deleteAddedSession(item.id)}/></p>)}
+ {addedSession && addedSession.map(item => <p className="list-item" key={item.sessionId}>
+   <span>Data Sesji: </span> {` ${convertDate(item.date)}  }`}<span> Czas sesji: </span> {`${item.duration   }`}<FaTrashAlt onClick={()=> deleteAddedSession(item.sessionId)}/></p>)}
       </div>
 </section>
  );

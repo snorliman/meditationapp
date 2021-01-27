@@ -36,6 +36,7 @@ export default function HomePage() {
     useEffect(() => {
         Aos.init({duration:2000});
     },[])
+    console.log("cokolwiek");
     return (
         <>
             <WhyMeditaition/>

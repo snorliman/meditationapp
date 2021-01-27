@@ -1,7 +1,9 @@
 @import "../../../styles/main.scss";
 
 .sheldue {
-    height: 50px;
+    height: 70px;
     width: 100%;
-    background-color: red;
+    background: linear-gradient(#ece3db, #f7a469);
+    border: 1px solid $Color3;
+    box-shadow: 1px 1px 40px 2px grey;
 }

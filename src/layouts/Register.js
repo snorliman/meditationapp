@@ -39,12 +39,6 @@ export default function Register({name, setName, setEmail, setPassword,
                 return usersCollection.doc(credential.user.uid).set({
                     email: credential.user.email,
                     name: nameRef.current.value,
-                    extrasession: [],
-                    failedsession: [],
-                    partlydonesession: [],
-                    planedsession: [],
-                    sucesssession: [],
-                    totaltime: 0
                 });
             }).then(() => {
                 console.log("added user to firestore");

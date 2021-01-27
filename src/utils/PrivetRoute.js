@@ -1,15 +1,13 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useAuth } from "../utils/ContextAuth";
 
-export default function PrivetRoute ({component:Component, ...rest}) {
-    const { currentUser } = useAuth();
+export default function PrivetRoute ({ user, component:Component, ...rest}) {
 
     return (
         <Route
             {...rest}
             render={props => {
-               return currentUser ?  <Component {...props}/> : <Redirect to="/"/>
+               return user ?  <Component {...props}/> : <Redirect to="/"/>
             }}
             >
         </Route>

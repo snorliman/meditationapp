@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -7,52 +7,51 @@ import Login from "./layouts/Login";
 import Register from "./layouts/Register";
 import PrivetRoute from "./utils/PrivetRoute";
 import MeditationApp from "./layouts/MeditationApp";
-import { AuthProvaider } from "./utils/ContextAuth";
-
+import firebase, { auth, usersCollection } from "./utils/firebase";
 
 function App() {
-    const [register, setRegister] = useState(true);
-    const [login, setLogin] = useState(false);
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
+  
+
+
+  const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(()=> {
+      const unsubscribe =auth.onAuthStateChanged(user => {
+          if(user) {
+              setLoading(false)
+              setCurrentUser(user)
+  
+              usersCollection.doc(user.uid)
+  
+              
+          
+      } else auth.signOut();
+  })
+      return unsubscribe;
+  },[currentUser])
 
   return (
-    <AuthProvaider >
-    <Header login={login}/>
+    <>
+    <Header user={currentUser}/>
     <Switch>  
       <Route exact path="/">
         <HomePage/>
       </Route>
       <Route path="/zaloguj">
         <Login
-        password={password}
-        register={register}
-        setLogin={setLogin}
-        login={login}
-        email={email}/>
+        />
       </Route>
       <Route path="/rejestracja">
-        <Register 
-        name={name}
-        setName={setName}
-        email={email}
-        setEmail={setEmail} 
-        setPassword={setPassword}
-        password={password}
-        confirmPassword={confirmPassword} 
-        setConfirmPassword={setConfirmPassword} 
-        register={register}
-        setRegister={setRegister}/>
+        <Register/>
       </Route>
-      <PrivetRoute path="/aplikacja">
+      <PrivetRoute path="/aplikacja" user={currentUser}>
         <MeditationApp
-        login={login}/>
+        />
       </PrivetRoute>
     </Switch>
     <Footer/>
-    </AuthProvaider>
+    </>
     
   );
 }

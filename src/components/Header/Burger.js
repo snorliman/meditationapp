@@ -43,11 +43,11 @@ div {
 
 `;
 
-const Burger = ({login}) => {
+const Burger = ({user}) => {
     const [open, setOpen] = useState(false)
     return (
         <>
-        <RightNav open={open} onclick={setOpen} login={login}/>
+        <RightNav open={open} onclick={setOpen} user={user}/>
         <StyldedBurger open={open} onClick={() => setOpen(!open)}>
             <div></div>
             <div></div>
