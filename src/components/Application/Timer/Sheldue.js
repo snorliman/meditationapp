@@ -10,6 +10,7 @@ const Sheldue = ({setChoosenSession, choosenSession, updatePlanedSession}) => {
 
 useEffect(() => {
     showPlanedsession();
+    showChoosenSession();
     
 },[])
 
@@ -30,6 +31,7 @@ const showPlanedsession = async () => {
     }).catch(e => console.log(e));
 }
     const chooseSessionHandler = async (sessionId) => {
+        if(choosenSession.lenght < 2)
     await sessionsCollection.doc(`${sessionId}`)
     .update({
         "status": "active"
@@ -53,39 +55,46 @@ const showPlanedsession = async () => {
             })  
         }).catch(e => console.log(e))
     }
-    const deleteChoosenSession = async (sessionId) => {
-        await sessionsCollection
-        .doc(`${sessionId}`)
+    const deleteChoosenSession = async (id) => {
+        console.log("odpaliła się funkcja")
+        await sessionsCollection.doc(`${id}`)
         .update({
-            "status":"planed"
+            "status": "planed"
         }).then(() => {
+            console.log("zmieniono na planed")
             showPlanedsession()
             showChoosenSession()
         }).catch((e) => console.log(e))
         
     }
-     
-    
-console.log("choosensession", choosenSession)
   
     return (
+        <>
         <div className="sheldue">
             <div className="session-planed">
                 <h3>WYBIERZ SESJĘ Z LISTY ZAPLANOWANYCH</h3> 
+                <ul className="list-of-session">
                 {selectableSessions  && selectableSessions.map(item => <p 
                 className="list-item" 
                 onClick={() => chooseSessionHandler(item.sessionId)}
                 key={item.sessionId}>
                     <span>Data Sesji: </span> {` ${convertDate(item.date.toDate())} `}
                     <span> Czas sesji: </span> {`${item.details.planedtime}`} </p>)}
+                    </ul>
             </div>
-                <h2>WYBRANA SESJA:</h2> 
-                {choosenSession && choosenSession.map(item => <p 
-                key={item.sessionId}
-                className="list-item"> {convertDate(item.date.toDate())}
-                <FaTrashAlt onClick={()=> deleteChoosenSession(item.sessionId)}/>
-                </p>)}
         </div>
+            <div className="choosen-session">
+                <h2>WYBRANA SESJA:</h2> 
+                <ul className="list-of-session">
+                    {choosenSession && choosenSession.map(item => <li 
+                    key={item.sessionId}
+                    className="list-item"> {convertDate(item.date.toDate())}
+                    <FaTrashAlt onClick={()=> deleteChoosenSession(item.sessionId)}/>
+                    </li>)}
+                </ul>
+            </div>
+        </>
+        
     )
 }
 export default Sheldue;

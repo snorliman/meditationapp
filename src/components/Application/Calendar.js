@@ -6,6 +6,7 @@ import "./Calendar.scss";
 import firebase, {  sessionsCollection } from "../../utils/firebase";
 import { convertDate } from "../../utils/convertDate.js";
 import uuid from 'react-uuid';
+import { isAfter } from "date-fns"
 
 
 
@@ -77,7 +78,7 @@ export default function Calendar() {
     .catch(e => console.log(e))
     
   }
-
+ 
  return (
    <section className="calendar-container">
 
@@ -113,7 +114,6 @@ export default function Calendar() {
       </select>
     </label>
     <button disabled={loading} className="calendar-btn" onClick={() => newSessionHandler(user)}>DODAJ SESJE DO LISTY</button>
-    <button className="calendar-btn" onClick={() => fetchData()}>Odśwież listę</button>
 
       <div className="session-list">
         <h3 className="calendar-list-header">LISTA TWOICH ZAPLANOWANYCH SESJI</h3>

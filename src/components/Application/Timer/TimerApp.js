@@ -8,6 +8,8 @@ const TimerApp = ({planedSessoin, musicOn, updatePlanedSession }) => {
     const [choosenSession, setChoosenSession] = useState([])
     const [isRunning, setIsRunning] = useState(false);
 
+    
+
   
 
     return (
@@ -17,7 +19,7 @@ const TimerApp = ({planedSessoin, musicOn, updatePlanedSession }) => {
         choosenSession={choosenSession}
         updatePlanedSession={updatePlanedSession} 
         setChoosenSession={setChoosenSession}/>)}
-        <Stoper choosenSession={choosenSession} setIsRunning={setIsRunning}/>
+        <Stoper choosenSession={choosenSession} setIsRunning={setIsRunning} isRunning={isRunning}/>
         {musicOn && <Library isRunning={isRunning}/>}
         </section>
     )

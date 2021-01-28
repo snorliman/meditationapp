@@ -1,14 +1,17 @@
 import "./Stoper.scss";
 import React, { useState, useEffect } from "react";
+import firebase, { sessionsCollection } from "../../../utils/firebase";
 import { FaPlay,  FaPause, FaStopCircle, FaAngleDoubleUp, FaAngleDoubleDown} from 'react-icons/fa';
+import uuid from 'react-uuid';
 
-const Stoper = ({setIsRunning, isRunning}) => {
+const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
     const [sessionTime, setSessionTime] = useState(30);
     const [doneMeditationTime, setDoneMeditationTime] = useState(0);
     const [second, setSecond] = useState('00');
     const [minute, setMinute] = useState('00');
     const [counter, setCounter] = useState(0);
-    const [ endSession ,setEndSession] = useState(false)
+    const [ endSession ,setEndSession] = useState(false);
+    const user =firebase.auth().currentUser;
 
     useEffect(() => {
       let intervalId;
@@ -31,6 +34,8 @@ const Stoper = ({setIsRunning, isRunning}) => {
             setIsRunning(false);
             setDoneMeditationTime(counter);
             setEndSession(true);
+            successSession();
+            
           }
         }, 1000)
       }
@@ -38,11 +43,60 @@ const Stoper = ({setIsRunning, isRunning}) => {
       return () => clearInterval(intervalId);
     }, [isRunning, counter])
     
-  
+    const successSession = async() => {
+      if(choosenSession) {
+      await sessionsCollection.doc(`${choosenSession.sessionId}`)
+            .update({
+              "status": "success",
+              "detail.activetime": parseInt(sessionTime)
+            }).then(() => {
+              console.log("sesja skończona sukcesem")
+            }).catch(e => console.log(e))
+          } else {
+            const id = uuid();
+            await sessionsCollection.doc(id).set({
+              uid: user.uid,
+              sessionId: id,
+              status: "extra",
+              date: new Date(),
+              details: {
+                planedtime: sessionTime,
+                activetime: sessionTime
+              }
+            }).then(() => console.log("uało się dodać extra sesję"))
+            .catch((e) => console.log(e) )
+          }
+    }
+    const partlyDoneSession = async() => {
+      if (choosenSession) {
+      await sessionsCollection.doc(`${choosenSession.sessionId}`)
+            .update({
+              "status": "partlydone",
+              "detail.activetime": parseInt(Math.floor(counter / 60))
+            }).then(() => {
+              console.log("sesja skończona częściowo")
+            }).catch(e => console.log(e))
+          } else {
+            const id = uuid();
+            await sessionsCollection.doc(id).set({
+              uid: user.uid,
+              sessionId: id,
+              status: "extra",
+              date: new Date(),
+              details: {
+                planedtime: sessionTime,
+                activetime: parseInt(Math.floor(counter / 60))
+              }
+            }).then(() => console.log("uało się dodać extra sesję"))
+            .catch((e) => console.log(e) )
+          }
+    }
+
     const finishSession = () => {
       setIsRunning(false);
       setDoneMeditationTime(counter);
       setEndSession(true);
+      partlyDoneSession();
     }
   
     const setTimeSesionHandler = (e) => {
@@ -83,14 +137,6 @@ const Stoper = ({setIsRunning, isRunning}) => {
     </div>
   </div>
 </div>
-<div id="audio-selector">
-  <div id="forest" className="theme">Forest</div>
-  <div id="ocean" className="theme">Ocean</div>
-  <div id="rainy" className="selected theme">Rainy</div>
-  <div id="peace" className="theme">Peace</div>
-  <div id="cafe" className="theme"></div>
-</div>
-<audio src="https://joeweaver.me/codepenassets/freecodecamp/challenges/build-a-pomodoro-clock/rain.mp3"/>
     </section>
     )
 }
