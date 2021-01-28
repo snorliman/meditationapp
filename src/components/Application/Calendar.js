@@ -12,33 +12,28 @@ import uuid from 'react-uuid';
 export default function Calendar() {
   const [startDate, setStartDate] = useState(new Date());
   const [timeOfSession, setTimeOfsession] = useState(5);
- const [addedSession, setAddedSession] = useState([]);
+  const [addedSession, setAddedSession] = useState([])
  const [loading, setLoading] = useState(false)
  
 
  const user =firebase.auth().currentUser;
  
- const fetchData = async () => {
-
-   const listOfplanedSession = [];
-
+  const fetchData = async () => {
+  
   await sessionsCollection
-  .where("uid", "==", user.uid)
+  .where("uid", "==", `${user.uid}`)
   .where("status", "==", "planed")
   .get()
-  .then(snapshot => {
-    snapshot.forEach(doc => {
+  .then( (snapshot) => {
+    const session = [];
+      snapshot.docs.forEach(doc => { 
+      session.push({...doc.data()});
+      console.log("session", session)
+      setAddedSession([...session]) 
       
-      const session = doc.data();
-        listOfplanedSession.push({
-        date: session.date.toDate(),
-        sessionId: session.sessionId,
-        duration: session.details.planedtime
-      });
-     setAddedSession(listOfplanedSession)
     })
   }).catch(e => console.log(e));
-  
+  console.log("addedSession", addedSession)
 }
  useEffect( () => {
    if (user) { 
@@ -94,6 +89,7 @@ export default function Calendar() {
       showTimeSelect
       dateFormat=" d, MM, yyyy H:mm"
       selected={startDate}
+      // minDate={new Date()}
       selectsStart
       startDate={startDate}
       onChange={date => setStartDate(date)}
@@ -117,11 +113,14 @@ export default function Calendar() {
       </select>
     </label>
     <button disabled={loading} className="calendar-btn" onClick={() => newSessionHandler(user)}>DODAJ SESJE DO LISTY</button>
+    <button className="calendar-btn" onClick={() => fetchData()}>Odśwież listę</button>
 
       <div className="session-list">
         <h3 className="calendar-list-header">LISTA TWOICH ZAPLANOWANYCH SESJI</h3>
  {addedSession && addedSession.map(item => <p className="list-item" key={item.sessionId}>
-   <span>Data Sesji: </span> {` ${convertDate(item.date)}  }`}<span> Czas sesji: </span> {`${item.duration   }`}<FaTrashAlt onClick={()=> deleteAddedSession(item.sessionId)}/></p>)}
+   <span>Data Sesji: </span> {` ${convertDate(item.date.toDate())}  }`}
+   <span> Czas sesji: </span> {`${item.details.planedtime   }`}
+   <FaTrashAlt onClick={()=> deleteAddedSession(item.sessionId)}/></p>)}
       </div>
 </section>
  );

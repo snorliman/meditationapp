@@ -4,7 +4,7 @@ import { useState} from "react";
 import AppSetupForm from "./AppSetupForm";
 import TimerApp from "./TimerApp";
 
-export default function Timer () {
+export default function Timer ({updatePlanedSession, addedSession}) {
 
     const [planedSessoin, setPlanedSession] = useState(false);
     const [musicOn, setMusicOn] = useState(false);
@@ -14,7 +14,11 @@ export default function Timer () {
     return (
         <>
         {finishSetup  
-        ? <TimerApp planedSessoin={planedSessoin} musicOn={musicOn}/>
+        ? <TimerApp 
+        updatePlanedSession={updatePlanedSession} 
+        planedSessoin={planedSessoin} 
+        musicOn={musicOn}
+        addedSession={addedSession}/>
         : <AppSetupForm 
         setPlanedSession= {setPlanedSession} 
         setMusicOn={setMusicOn} 
