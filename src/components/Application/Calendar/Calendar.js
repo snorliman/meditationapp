@@ -3,8 +3,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.scss";
-import firebase, {  sessionsCollection } from "../../utils/firebase";
-import { convertDate } from "../../utils/convertDate.js";
+import firebase, {  sessionsCollection } from "../../../utils/firebase";
+import { convertDate } from "../../../utils/convertDate.js";
 import uuid from 'react-uuid';
 import { isAfter } from "date-fns"
 

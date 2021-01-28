@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import Button from "../Button/Button";
-import firebase,{ sessionsCollection } from "../../utils/firebase";
+import Button from "../../Button/Button";
+import firebase,{ sessionsCollection } from "../../../utils/firebase";
 import { isAfter } from "date-fns";
 
 export default function Panel () {

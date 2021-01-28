@@ -1,0 +1,29 @@
+@import "../../../styles/main.scss";
+
+.history-container {
+  height: 65vh;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 1px 2px 7px 1px $Color1;
+  background-color: $Color1;
+  .history-panel {
+    display: flex;
+    justify-content:center;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+  }
+  .history-btn {
+    border: 1px solid orange;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    padding: 15px;
+    &:hover, &focus, &active {
+      color: orange;
+      border-color: white;
+ 
+    }
+}
+}

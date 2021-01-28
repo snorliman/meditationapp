@@ -1,9 +1,9 @@
 import React from 'react';
 import "./MeditationApp.scss";
-import Panel from "../components/Application/Panel";
+import Panel from "../components/Application/Panel/Panel";
 import Timer from "../components/Application/Timer/Timer";
-import Calendar from "../components/Application/Calendar";
-import History from "../components/Application/History";
+import Calendar from "../components/Application/Calendar/Calendar";
+import History from "../components/Application/History/History";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 
