@@ -1,8 +1,11 @@
 import "./Stoper.scss";
 import React, { useState, useEffect } from "react";
 import firebase, { sessionsCollection } from "../../../utils/firebase";
+import Bell from "../../../assets/music/dzwonek.mp3";
+import { Howl, Houwler } from "howler";
 import { FaPlay,  FaPause, FaStopCircle, FaAngleDoubleUp, FaAngleDoubleDown} from 'react-icons/fa';
 import uuid from 'react-uuid';
+import { is } from "date-fns/esm/locale";
 
 const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
     const [sessionTime, setSessionTime] = useState(30);
@@ -12,6 +15,18 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
     const [ endSession ,setEndSession] = useState(false);
     const user =firebase.auth().currentUser;
 
+    const audioClips =  { sound: Bell, label:"Start"}
+    
+
+    const Play = (src) => {
+      const sound = new Howl({
+        src,
+        html5: true
+      })
+      sound.play()
+      setIsRunning(!isRunning)
+    }
+    
     useEffect(() => {
       let intervalId;
   
@@ -90,8 +105,9 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
           }
     }
 
-    const finishSession = () => {
+    const finishSession = (sound) => {
       setIsRunning(false);
+      Play(sound)
       setEndSession(true);
       partlyDoneSession();
     }
@@ -117,11 +133,11 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
         <span id="seconds">{second}</span>
       </div>
       <div id="controls" className="reset">
-          {isRunning
-          ? <div onClick={() => setIsRunning(false)} id="pause"><FaPause className="fa-pause"></FaPause> Paza</div>
-          : <div onClick={() => setIsRunning(true)} id="start"><FaPlay className="fa-play"></FaPlay> Start</div>
-        }
-        <div onClick={() => finishSession()} id="reset"><FaStopCircle className="fa-stop-circle"></FaStopCircle> Koniec Praktyki</div>
+      {isRunning
+            ? <div onClick={() => setIsRunning(!isRunning) } id="pause"><FaPause className="fa-pause"></FaPause> Paza</div>
+            : <div onClick={() => Play(audioClips.sound)} id="start"><FaPlay className="fa-play"></FaPlay> Start</div>
+          }
+        <div onClick={() => finishSession(audioClips.sound)} id="reset"><FaStopCircle className="fa-stop-circle"></FaStopCircle> Koniec Praktyki</div>
       </div>
     </div>
   </div>
@@ -129,7 +145,7 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
     <div id="session">
       <FaAngleDoubleUp onClick={() => setSessionTime(sessionTime + 1)} id="incrSession" className="FaAngleDoubleUp"></FaAngleDoubleUp>
       <span className="option-title">Session</span>
-      <input onChange={(e) => setTimeSesionHandler(e.target.value)} id="sessionInput" type="number" value={choosenSession ? choosenSession.details.planedtime: sessionTime} max="60" min="5"/>
+      <input onChange={(e) => setTimeSesionHandler(e.target.value)} id="sessionInput" type="number" value={ sessionTime } max="60" min="5"/>
       <FaAngleDoubleDown onClick={() => setSessionTime(sessionTime -1)} id="decrSession" className="FaAngleDoubleDown"></FaAngleDoubleDown>
     </div>
   </div>

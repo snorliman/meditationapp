@@ -11,26 +11,22 @@ export const musicList = [
     { 
         src: "https://soundcloud.com/ukasz-osi-ski-212232045/evening-walk-with-footsteps",
         title: "wieczorny spacer",
-        active: false,
         id: uuid(),
     },
     { 
         src: "https://soundcloud.com/ukasz-osi-ski-212232045/focus-and-concentration-with-gamma-waves",
         title: "Muzyka do koncentracji",
-        active: false,
         id: uuid(),
     },
     { 
         src: "https://soundcloud.com/ukasz-osi-ski-212232045/relaxing-your-mind-and-body",
         title: "Muzyka relaksacyjna",
-        active: false,
         id: uuid(),
     
     },
     { 
         src: "https://soundcloud.com/ukasz-osi-ski-212232045/zen-underwater-music",
         title: "Muzyka Zen",
-        active: false,
         id: uuid(),
     },
     // { 

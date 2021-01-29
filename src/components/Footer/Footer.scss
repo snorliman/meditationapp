@@ -32,12 +32,23 @@
   }
   .social-container {
     display: flex;
-    width: 120px;
+    width: 100px;
     height: 70px;
     justify-content: space-between;
     align-items: center;
     @media (max-width: 360px) {
-      width: 90px;
+      width: 70px;
     }
   }
+}
+.social-icon {
+  color:#f9710d;
+  font-size: 15px;
+  &:hover {
+      color: white;
+  }
+}
+.social-link {
+  font-size: 15px;
+  height: 15px;
 }
