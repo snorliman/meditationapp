@@ -8,32 +8,27 @@ const Ul = styled.ul`
     display: flex;
    justify-content: space-around; 
    height: 100%;
-   widht:100%;
-   
+   widht:100%; 
    align-items: center;
    flex-flow: row nowrap;
    text-align: center;
    list-style: none;
-
    #nav-item {
        &:hover {
            cursor: poiner;
            color: black;
        }
-   }
-   
+    }   
    li {
         padding: 10px 10px;
         font-weight: 600;
         color: white;
         &:hover{
             color: black;
-        }
-    
+        } 
     } 
    }
-    @media(max-width: 768px){
-    
+    @media(max-width: 768px){ 
         flex-flow: column nowrap;
         background-color: #F9710D;
         position: fixed;
@@ -54,31 +49,31 @@ const linkstyle = {
 
 
 
-const RightNav = ({open, onclick, user }) => {
+const RightNav = ({open, onclick, login, setLogin }) => {
 
-    // const { currentUser } = useAuth();
     const history = useHistory();
 
     const logoutHandler = () => {
         onclick(false);
         firebase
         .auth()
-        .singOut()
+        .signOut()
         .then(() => {
             console.log("user log out")
+            setLogin(false)
             history.push("/")
-        })
+        }).catch(e => console.log(e))
     }
     return (
-        <Ul open={open}>
+        <Ul open={open}  onclick={onclick}>
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"  to="/#why-meditation"><li>DLACZEGO MEDYTOWAĆ</li></HashLink>
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/#how-to-start"><li>JAK ZACZĄĆ PRAKTYKĘ</li></HashLink>
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#how-to-use-app"> <li>JAK UŻYWAĆ APLIKACJI</li></HashLink>
             <HashLink onClick={() => onclick(false)} style={linkstyle} id="nav-item"to="/#contact"><li>KONTAKT</li></HashLink>
             <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/rejestracja"> <li>ZAREJESTRUJ SIĘ</li></Link>
-            {/* {user === undefined 
-            ? <Link onClick={() => logoutHandler()} exact to="/" style={linkstyle} id="nav-item" ><li>WYLOGUJ SIĘ</li></Link>:  */}
-            <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/zaloguj"><li>ZALOGUJ SIĘ</li></Link>  
+            {login
+            ? <Link onClick={() => logoutHandler()} to="/" style={linkstyle} id="nav-item" ><li>WYLOGUJ SIĘ</li></Link> 
+            : <Link onClick={() => onclick(false)} style={linkstyle} id="nav-item" to="/zaloguj"><li>ZALOGUJ SIĘ</li></Link> } 
         </Ul>
     )
 }

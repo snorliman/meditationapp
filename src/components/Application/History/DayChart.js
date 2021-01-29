@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from "react";
-import {FaCheckCircle, FaFrown, FaStarHalfAlt, FaCommentDots } from "react-icons/fa"
+import {FaCheckCircle, FaFrown, FaStarHalfAlt } from "react-icons/fa"
 import firebase, { sessionsCollection } from "../../../utils/firebase";
 import { isAfter, sub} from 'date-fns';
 

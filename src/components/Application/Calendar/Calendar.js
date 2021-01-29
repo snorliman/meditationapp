@@ -6,7 +6,6 @@ import "./Calendar.scss";
 import firebase, {  sessionsCollection } from "../../../utils/firebase";
 import { convertDate } from "../../../utils/convertDate.js";
 import uuid from 'react-uuid';
-import { isAfter } from "date-fns"
 
 
 

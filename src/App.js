@@ -7,25 +7,18 @@ import Login from "./layouts/Login";
 import Register from "./layouts/Register";
 import PrivetRoute from "./utils/PrivetRoute";
 import MeditationApp from "./layouts/MeditationApp";
-import firebase, { auth, usersCollection } from "./utils/firebase";
+import { auth, usersCollection } from "./utils/firebase";
 
 function App() {
-  
-
-
   const [currentUser, setCurrentUser] = useState();
-  const [loading, setLoading] = useState(true)
+  const [login, setLogin] = useState((false))
   
   useEffect(()=> {
       const unsubscribe =auth.onAuthStateChanged(user => {
           if(user) {
-              setLoading(false)
               setCurrentUser(user)
   
-              usersCollection.doc(user.uid)
-  
-              
-          
+              usersCollection.doc(user.uid)   
       } else auth.signOut();
   })
       return unsubscribe;
@@ -33,13 +26,13 @@ function App() {
 
   return (
     <>
-    <Header user={currentUser}/>
+    <Header setLogin={setLogin} login={login}/>
     <Switch>  
       <Route exact path="/">
         <HomePage/>
       </Route>
       <Route path="/zaloguj">
-        <Login
+        <Login setLogin={setLogin} login={login}
         />
       </Route>
       <Route path="/rejestracja">

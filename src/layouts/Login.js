@@ -29,6 +29,7 @@ export default function Login({password, register, setLogin, email, login}) {
             .then(() => {
                 console.log("zalogowano" )
                 history.push("/aplikacja");
+                setLogin(true)
             })
             .catch(e => {
                 console.log(e)

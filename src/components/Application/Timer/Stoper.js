@@ -6,7 +6,6 @@ import uuid from 'react-uuid';
 
 const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
     const [sessionTime, setSessionTime] = useState(30);
-    const [doneMeditationTime, setDoneMeditationTime] = useState(0);
     const [second, setSecond] = useState('00');
     const [minute, setMinute] = useState('00');
     const [counter, setCounter] = useState(0);
@@ -32,7 +31,6 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
           if(counter === (sessionTime * 60)) {
             clearInterval(intervalId)
             setIsRunning(false);
-            setDoneMeditationTime(counter);
             setEndSession(true);
             successSession();
             
@@ -94,7 +92,6 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
 
     const finishSession = () => {
       setIsRunning(false);
-      setDoneMeditationTime(counter);
       setEndSession(true);
       partlyDoneSession();
     }
@@ -132,7 +129,7 @@ const Stoper = ({setIsRunning, isRunning, choosenSession}) => {
     <div id="session">
       <FaAngleDoubleUp onClick={() => setSessionTime(sessionTime + 1)} id="incrSession" className="FaAngleDoubleUp"></FaAngleDoubleUp>
       <span className="option-title">Session</span>
-      <input onChange={(e) => setTimeSesionHandler(e.target.value)} id="sessionInput" type="number" value={sessionTime} max="60" min="5"/>
+      <input onChange={(e) => setTimeSesionHandler(e.target.value)} id="sessionInput" type="number" value={choosenSession ? choosenSession.details.planedtime: sessionTime} max="60" min="5"/>
       <FaAngleDoubleDown onClick={() => setSessionTime(sessionTime -1)} id="decrSession" className="FaAngleDoubleDown"></FaAngleDoubleDown>
     </div>
   </div>

@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import VerifyPopup from "../components/Register/VerifyPopup";
 import "./Register.scss";
 import firebase, { usersCollection } from "../utils/firebase";
 import {  useHistory } from "react-router-dom";
 
-export default function Register({name, setName, setEmail, setPassword, 
-    password, email, confirmPassword, setConfirmPassword, setRegister, register}) {
+export default function Register({password, confirmPassword}) {
 
         const emailRef = useRef();
         const passwordRef = useRef();
@@ -52,21 +50,6 @@ export default function Register({name, setName, setEmail, setPassword,
         };
     }
         
-    // async function registerUser(unmouted) {
-    //     if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-    //         setPasswordError("hasła muszą być takie same")
-    //     }
-    //     try {
-    //         setPasswordError("");
-    //         setLoading(true);
-    //         if(!unmouted)
-    //         await signUp(emailRef.current.value, passwordRef.current.value);
-    //     history.push('/zaloguj')
-    //     } catch {
-    //         setPasswordError("Nie udało się stworzyć konta")
-    //     }
-    //     setLoading(false);
-    // }
      function registerHandler (e) {
         e.preventDefault();
         registerUser(unmouted)   
@@ -75,7 +58,6 @@ export default function Register({name, setName, setEmail, setPassword,
 
     return (
         <section className="register">
-            {register && <VerifyPopup/>}
            <form onSubmit={(e) => registerHandler(e)} className="register-form">
            <h2 className="register-header">Zarejestruj sie żeby korzystać z naszej aplikacji</h2>
             <div className="register-container">

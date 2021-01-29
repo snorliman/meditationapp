@@ -33,10 +33,10 @@ export default function Panel () {
     const updatePlanedSession = () => {
     
         if(allPlanedSession) {
-            allPlanedSession.map(item => {
+            allPlanedSession.forEach(item => {
             if (isAfter((new Date(item.date.seconds * 1000 + item.date.nanoseconds/1000000), actualDate))) {
                try {
-                  sessionsCollection.doc(`${item.sessonId}`).update({
+                   sessionsCollection.doc(`${item.sessonId}`).update({
                    "status": "failed",
                    "details.activetime": 0
                 })
@@ -47,7 +47,7 @@ export default function Panel () {
                }
             } else {
                 console.log("planowana data nie mineła jeszcze")
-            }
+            } 
         })
     } else {
         console.log("nie ma allPlanedSession")
