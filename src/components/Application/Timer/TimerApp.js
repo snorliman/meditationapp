@@ -7,6 +7,7 @@ import Stoper from "./Stoper";
 const TimerApp = ({planedSessoin, musicOn, updatePlanedSession }) => {
     const [choosenSession, setChoosenSession] = useState([])
     const [isRunning, setIsRunning] = useState(false);
+    
 
     
 
