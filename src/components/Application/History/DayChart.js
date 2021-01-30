@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from "react";
 import {FaCheckCircle, FaFrown, FaStarHalfAlt } from "react-icons/fa"
 
-import { isAfter, sub} from 'date-fns';
+import { isAfter, subDays} from 'date-fns';
 
 const DayChart = ({sessionsHistory}) => {
     
@@ -14,9 +14,9 @@ const DayChart = ({sessionsHistory}) => {
     
 
 const getLast7days = () => {
-    const lastweek = sessionsHistory.filter(item => isAfter(item.date.toDate(), sub(new Date(),{
-        days: 7
-    } )) )
+    const lastweek = sessionsHistory.filter(item => isAfter(item.date.toDate(), subDays(new Date(), 7) )).sort((a, b) => {
+        return new Date(a.date).valueOf() - new Date(b.date).valueOf()
+    })
     return setLast7days(lastweek);
 }
 
