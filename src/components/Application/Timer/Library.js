@@ -4,11 +4,11 @@ import { musicList } from "../../../utils/musicData";
 import Player from "./Player";
 import LibrarySong from "./LibrarySong";
 
-const Library = ({isRunning}) => {
+const Library = ({isRunning, setLibraryStatus, libraryStatus}) => {
 const [songs] = useState(musicList);
 const [currentSongIndex, setCurrentSongIndex] = useState(0);
 const [nextSongIndex, setNextSongIndex] = useState(currentSongIndex + 1);
-const [libraryStatus, setLibraryStatus] = useState(false)
+
 
 
 useEffect(() => {
@@ -29,6 +29,7 @@ useEffect(() => {
                         key={song.id} 
                         id={song.id}
                         isRunning={isRunning}
+                        setLibraryStatus={setLibraryStatus}
                         song={song}
                         songs={songs} 
                         setCurrentSongIndex={setCurrentSongIndex}/>
